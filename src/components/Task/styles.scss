@@ -1,0 +1,54 @@
+@import '../../theme/palette';
+
+.task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 6.1rem;
+    margin: 1.3rem 0 0;
+    margin-bottom: 1.3rem;
+    padding: 1.8rem;
+    letter-spacing: 0.1rem;
+    background-color: $paletteColor2;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.2rem 0.6rem $rgbaColor1;
+    font-size: 2rem;
+    font-weight: 400;
+
+    & div span {
+        cursor: pointer;
+    }
+
+    & > div:first-child {
+        display: flex;
+        width: 65rem;
+
+        & span {
+            display: flex;
+            align-items: center;
+            margin-right: 1.9rem;
+        }
+
+        & input {
+            width: 100%;
+            border: 0;
+        }
+    }
+
+    & > div:last-child {
+        & span {
+            margin-left: 1.7rem;
+        }
+    }
+}
+
+.completed {
+    background-color: $paletteColor8;
+    color: $paletteColor9;
+
+    & > div:first-child {
+        & input {
+            background-color: $paletteColor8;
+        }
+    }
+}
