@@ -8,4 +8,4 @@ import './theme/reset.css';
 // App
 import App from './containers/App';
 
-render(<App />, document.getElementById('root'));
+render(<App />, document.querySelector('#root'));

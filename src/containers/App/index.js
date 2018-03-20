@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import Scheduler from 'components/Scheduler';
 
 export default class App extends Component {
-    render () {
-        return 'Scheduler';
+    render() {
+        return <Scheduler />;
     }
 }
