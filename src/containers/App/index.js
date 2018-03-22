@@ -6,9 +6,11 @@ import Task from '../../components/Task.js'; // Task class
 
 export default class App extends Component {
     state = {
-        tasks: [
-            new Task('Тестовая задача', false, false)
-        ],
+        tasks: [],
+    }
+
+    componentDidMount = () => {
+        this.setState((prev) => ({ tasks: [new Task('Тестовая задача')]}));
     }
 
     addTask = (message) => {
