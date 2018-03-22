@@ -38,6 +38,7 @@
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.6",
+    "prologger": "^2.0.0",
     "promise": "8.0.1",
     "react": "~16.2.0",
     "react-dev-utils": "^3.1.0",
@@ -74,7 +75,8 @@
     "check": "run-s lint:eslint lint:scss-lint",
     "lint:eslint": "eslint ./src",
     "lint:scss-lint": "scss-lint",
-    "deploy": "gh-pages"
+    "deploy": "gh-pages",
+    "init": "git submodule init; git submodule update; npm i; npm run start-js"
   },
   "devDependencies": {
     "babel-preset-stage-0": "^6.24.1",

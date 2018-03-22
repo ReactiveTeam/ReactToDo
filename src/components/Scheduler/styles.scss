@@ -75,23 +75,22 @@
                 justify-content: space-between;
                 margin: 0 0 1.3rem;
 
-                input {
+                input:not([type='submit']) {
                     width: 55rem;
                 }
 
-                button {
+                input[type='submit'] {
                     width: 21.5rem;
                     height: 4.2rem;
                     border-radius: 0.5rem;
                     background-color: $paletteColor3;
                     font-size: 1.8rem;
                     letter-spacing: .1rem;
-                    padding-left: 1.5rem;
+                    padding-left: 3.5rem;
                     color: $paletteColor2;
                     border: 0;
                     cursor: pointer;
                     background-image: url('../../theme/assets/plus-icon.svg');
-                    backgorund-color: white;
                     background-repeat: no-repeat;
                     background-size: 1.8rem 1.8rem;
                     background-position: 6% 50%;

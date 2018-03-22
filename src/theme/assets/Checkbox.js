@@ -1,17 +1,29 @@
 // Core
 import React, { Component } from 'react';
+import type from 'prop-types';
 
 // Imstruments
 import transform from './Svg';
 
 class Checkbox extends Component {
+    static propTypes = {
+        checked: type.bool.isRequired,
+        onClick: type.func.isRequired,
+    }
+
     render () {
-        const { checked, color1, color2 } = this.props;
+        const {
+            checked,
+            color1 = '#e4e4e4', //FIXME: Hardcoded from $paletteColor8
+            color2 = '#656565', //FIXME: Hardcoded from $paletteColor9
+            // Handlerss
+            onClick,
+        } = this.props;
 
         const fill = checked ? color1 : color2;
 
         return (
-            <g>
+            <g onClick = { onClick }>
                 <rect
                     fill = { fill }
                     height = '25'
