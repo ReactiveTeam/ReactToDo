@@ -5,6 +5,7 @@ import type from 'prop-types';
 import Task from '../Task';
 
 import Styles from './styles.scss';
+import Tasker from '../Tasker';
 
 import Logger from 'prologger';
 const logger = new Logger({
@@ -65,16 +66,13 @@ export default class Sheduler extends Component {
      render () {
          const { tasks, toggleCheck, toggleStar, removeTask } = this.props;
 
-         const tasklist = tasks.map((e, i) => (<Task
-             completed = { e.checked }
-             key = { i }
-             removeTask = { removeTask } // eslint-disable-line
-             stared = { e.stared }
-             taskid = { e.id }
-             text = { e.message }
-             toggleCheck = { toggleCheck }
-             toggleStar = { toggleStar }
-         />));
+         let tasklist = [];
+
+         tasklist = tasklist.concat( // Объединяем массивы задач в один с нужным нам порядком
+             tasks[0].map((e) => Tasker.toJSX(e, removeTask, toggleCheck, toggleStar)), // Важные задачи
+             tasks[1].map((e) => Tasker.toJSX(e, removeTask, toggleCheck, toggleStar)), // Обычные задачи
+             tasks[2].map((e) => Tasker.toJSX(e, removeTask, toggleCheck, toggleStar)), // Выполненные задачи
+         );
 
 
          return (

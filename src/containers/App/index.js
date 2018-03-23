@@ -80,10 +80,26 @@ export default class App extends Component {
         }));
     }
 
+    /** Сортирует текущие задания на 3 списка
+     * 1. Важные задания
+     * 2. Обычные задания
+     * 3. Выполненные задания
+     * @returns {array} Двумерный массив: [выжные, обычные, выполненные]
+     */
     sortTasks = () => {
-        this.setState((prev) => ({
-            tasks: prev.tasks.sort((a, b) => a.message.charCodeAt() - b.message.charCodeAt()),
-        }));
+        const { tasks } = this.state;
+
+
+        const a = [
+            Task.sort(tasks.filter((el) => el.stared && !el.checked)), // Важные задания
+            Task.sort(tasks.filter((el) => !el.stared && !el.checked)), // Обычные задания
+            Task.sort(tasks.filter((el) => el.checked)) // Выполненные задания
+        ];
+
+        debugger;
+
+
+        return a;
     }
 
     render () {
@@ -93,7 +109,7 @@ export default class App extends Component {
                 <Scheduler
                     addTask = { this.addTask }
                     removeTask = { this.removeTask }
-                    tasks = { this.state.tasks }
+                    tasks = { this.sortTasks() }
                     toggleCheck = { this.toggleCheck }
                     toggleSettings = { this.toggleSettings }
                     toggleStar = { this.toggleStar }
