@@ -14,7 +14,8 @@ import Storage from '../../utils/Storage';
 
 export default class Settings extends Component {
  static propTypes = {
-     show: type.bool.isRequired,
+     show:       type.bool.isRequired,
+     toggleShow: type.func.isRequired,
  }
 
  state = {
@@ -26,9 +27,13 @@ export default class Settings extends Component {
      this.setState({ value: event.target.value });
  }
 
- onClick = (event) => {
+ onClick = () => {
      Storage.token = this.state.value;
      Storage._save();
+ }
+
+ closeWindow = () => {
+     this.props.toggleShow(false);
  }
 
  render () {
@@ -38,7 +43,7 @@ export default class Settings extends Component {
          <Fragment>
              <div className = { Styles.overlay } />
              <div className = { Styles.settings }>
-                 <button className = { Styles.cross }>x</button>
+                 <button className = { Styles.cross } onClick = { this.closeWindow }>x</button>
                  <header>
                      <h2>Настройки</h2>
                      <label>Token:<br />

@@ -13,7 +13,7 @@ const { log } = logger;
 export default class App extends Component {
     state = {
         tasks:    [],
-        settings: true,
+        settings: false,
     }
 
     componentDidMount = () => {
@@ -89,12 +89,13 @@ export default class App extends Component {
     render () {
         return (
             <Fragment>
-                <Settings show = { this.state.settings } />
+                <Settings show = { this.state.settings } toggleShow = { this.toggleSettings } />
                 <Scheduler
                     addTask = { this.addTask }
                     removeTask = { this.removeTask }
                     tasks = { this.state.tasks }
                     toggleCheck = { this.toggleCheck }
+                    toggleSettings = { this.toggleSettings }
                     toggleStar = { this.toggleStar }
                 />
             </Fragment>

@@ -19,8 +19,9 @@ const { log } = logger;
 
 export default class Sheduler extends Component {
     static propTypes = {
-        addTask: type.func.isRequired,
-        tasks:   type.array.isRequired, // Can't use arrayOf
+        addTask:        type.func.isRequired,
+        tasks:          type.array.isRequired, // Can't use arrayOf
+        toggleSettings: type.func.isRequired,
     }
 
     state = {
@@ -30,6 +31,10 @@ export default class Sheduler extends Component {
     /**
      * Methods
      */
+
+     openSettings = () => {
+         this.props.toggleSettings(true);
+     }
 
     /**
      * Handlers
@@ -77,7 +82,7 @@ export default class Sheduler extends Component {
                  <main>
                      <header>
                          <h1>Планировщик задач</h1>
-                         <button />
+                         <button onClick = { this.openSettings } />
                          <input placeholder = 'Поиск' type = 'text' />
                      </header>
                      <section>

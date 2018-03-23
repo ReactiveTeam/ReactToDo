@@ -77,6 +77,7 @@
   margin-top: 8px;
   position: absolute;
   left: 58%;
+  cursor: pointer;
 }
 
 .scheduler main section {
