@@ -5,11 +5,14 @@
  * https://opensource.org/licenses/MIT
  */
 
+import ID from '../utils/Id';
+
 class Tasker {
-    constructor (message, checked = true, stared = false) {
+    constructor (message, checked = false, stared = false) {
         this.stared = stared;
         this.message = message;
         this.checked = checked;
+        this.id = ID.getId();
     }
 }
 

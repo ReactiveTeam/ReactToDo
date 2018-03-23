@@ -6,10 +6,25 @@ import Task from '../Task';
 
 import Styles from './styles.scss';
 
+import Logger from 'prologger';
+const logger = new Logger({
+    levels: [ // Уровни вывода лога. TODO: Не забудьте убрать после отладки!
+        'submit',
+        'change',
+        'click'
+    ],
+    from: 'Scheduler',
+});
+const { log } = logger;
+
 export default class Sheduler extends Component {
     static propTypes = {
         addTask: type.func.isRequired,
         tasks:   type.array.isRequired, // Can't use arrayOf
+    }
+
+    state = {
+        value: '',
     }
 
     /**
@@ -22,17 +37,39 @@ export default class Sheduler extends Component {
 
      onSubmit = (event) => {
          event.preventDefault();
-         console.log('onSubmit');
+         log('onSubmit', { level: 'submit' });
+         if (!this.state.value.trim()) {
+             log('Не пропускаем пустую строку', { level: 'submit' });
 
-         this.props.addTask('New Task');
+             return false;
+         }
+
+         this.props.addTask(this.state.value);
+         this.setState({ value: '' });
 
          return false;
      }
 
-     render () {
-         const { tasks } = this.props;
+     onInputChange = (event) => {
+         log(`onInputChange {${event.target.value.length}}`, { level: 'change' });
+         if (event.target.value.length < 47) {
+             this.setState({ value: event.target.value });
+         }
+     }
 
-         const tasklist = tasks.map((e, i) => <Task completed = { e.checked } key = { i } stared = { e.stared } text = { e.message } />);
+     render () {
+         const { tasks, toggleCheck, toggleStar, removeTask } = this.props;
+
+         const tasklist = tasks.map((e, i) => (<Task
+             completed = { e.checked }
+             taskid = { e.id }
+             key = { i } // eslint-disable-line
+             removeTask = { removeTask }
+             stared = { e.stared }
+             text = { e.message }
+             toggleCheck = { toggleCheck }
+             toggleStar = { toggleStar }
+         />));
 
 
          return (
@@ -44,7 +81,14 @@ export default class Sheduler extends Component {
                      </header>
                      <section>
                          <form onSubmit = { this.onSubmit }>
-                             <input autoFocus type = 'text' value = 'Описание моей новой задачи' />
+                             <input
+                                 autoFocus
+                                 className = { this.state.value.length === 46 ? Styles.overflow : null }
+                                 placeholder = 'Описание моей новой задачи'
+                                 type = 'text'
+                                 value = { this.state.value }
+                                 onChange = { this.onInputChange }
+                             />
                              <input type = 'submit' value = 'Добавить задачу' />
                          </form>
                          <ul>

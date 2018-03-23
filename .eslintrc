@@ -46,14 +46,14 @@ rules:
   no-unsafe-finally: 1
   no-unsafe-negation: 1
   use-isnan: 1
-  valid-jsdoc: 1
+  valid-jsdoc: [1, {"requireReturn": false}]
   valid-typeof: 1
   accessor-pairs: 1
   array-callback-return: 1
   block-scoped-var: 1
   complexity: 1
   consistent-return: 0
-  curly: 1
+  curly: 0
   default-case: 1
   dot-notation: 1
   eqeqeq: 1

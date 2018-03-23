@@ -16,14 +16,12 @@ class Checkbox extends Component {
             checked,
             color1 = '#e4e4e4', //FIXME: Hardcoded from $paletteColor8
             color2 = '#656565', //FIXME: Hardcoded from $paletteColor9
-            // Handlerss
-            onClick,
         } = this.props;
 
         const fill = checked ? color1 : color2;
 
         return (
-            <g onClick = { onClick }>
+            <g>
                 <rect
                     fill = { fill }
                     height = '25'

@@ -122,3 +122,7 @@
         }
     }
 }
+
+.overflow:focus {
+    border-color: $paletteColor10 !important; // Из-за особенностей scss, требуется использовать !important
+}

@@ -120,3 +120,7 @@
   letter-spacing: .1rem;
   color: #363636;
 }
+
+.overflow:focus {
+  border-color: #F33B3B !important;
+}

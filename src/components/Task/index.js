@@ -21,6 +21,16 @@ export default class Task extends Component {
     }
 
     /**
+     * Reactive handlers
+     */
+
+    componentDidMount = () => {
+        this.setState({
+            //
+        });
+    }
+
+    /**
      * Handlers
      */
 
@@ -41,27 +51,26 @@ export default class Task extends Component {
       * Methods
       */
 
-      toggle = (mode) => {
-          //
-      }
+     render () {
+         const { completed, stared, text = '', taskid } = this.props;
+         const toggleStar = () => this.props.toggleStar(taskid);
+         const toggleCheck = () => this.props.toggleCheck(taskid);
+         const removeTask = () => this.props.removeTask(taskid);
 
-      render () {
-          const { completed = false, text = '' } = this.props;
 
-
-          return (
-              <li className = { [Styles.task, completed ? Styles.completed : null].join(' ') }>
-                  <div>
-                      <Checkbox checked = { completed } onClick = { this.onClick } />
-                      {/* <input type = 'text' value = { text } /> */}
-                      <span>{text}</span>
-                  </div>
-                  <div>
-                      <Star onClick = { this.onStar } />
-                      <Edit onClick = { this.onEdit } />
-                      <Delete onClick = { this.onRemove } />
-                  </div>
-              </li>
-          );
-      }
+         return (
+             <li className = { [Styles.task, completed ? Styles.completed : null].join(' ') }>
+                 <div>
+                     <Checkbox checked = { completed } onClick = { toggleCheck } />
+                     {/* <input type = 'text' value = { text } /> */}
+                     <span>{text}</span>
+                 </div>
+                 <div>
+                     <Star checked = { stared } onClick = { toggleStar } />
+                     <Edit onClick = { this.onEdit } />
+                     <Delete onClick = { removeTask } />
+                 </div>
+             </li>
+         );
+     }
 }
