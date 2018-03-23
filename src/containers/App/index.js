@@ -10,6 +10,10 @@ import Logger from 'prologger';
 const logger = new Logger({ from: 'App' });
 const { log } = logger;
 
+// TODO
+import TODO from './todo';
+// TODO
+
 /* eslint-disable max-statements-per-line */
 // По причине того, что break писать на отдельной строке не выгодно, так как при его отсутствии кейсы пишутся один за другим
 
@@ -21,7 +25,8 @@ export default class App extends Component {
 
     componentDidMount = () => {
         Storage._load();
-        this.setState({ tasks: [new Task('Тестовая задача')]});
+        // this.setState({ tasks: [new Task('Тестовая задача')]});
+        this.setState({ tasks: TODO.map((el) => new Task(el)) });
     }
 
     /** Переключатель видимости окошка настроек

@@ -22,7 +22,9 @@ class Tasker {
      * @returns {array} Отсортированный массив задач
      */
     static sort (array) {
-        return array.sort((a, b) => a.message.charCodeAt() - b.message.charCodeAt());
+        return array.sort(
+            (a, b) => (a.message.charCodeAt() - b.message.charCodeAt()) + (a.message.charCodeAt(1) - b.message.charCodeAt(1)) // eslint-disable-line
+        );
     }
 
     /** Возвращает JSX представление задачи
