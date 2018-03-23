@@ -43,13 +43,13 @@ export default class Settings extends Component {
          <Fragment>
              <div className = { Styles.overlay } />
              <div className = { Styles.settings }>
-                 <button className = { Styles.cross } onClick = { this.closeWindow }>x</button>
+                 <button className = { Styles.cross } onMouseDown = { this.closeWindow }>x</button>
                  <header>
                      <h2>Настройки</h2>
                      <label>Token:<br />
                          <input type = 'text' onChange = { this.onChange } />
                      </label>
-                     <input type = 'button' value = 'Сохранить' onClick = { this.onClick } />
+                     <input type = 'button' value = 'Сохранить' onMouseDown = { this.onClick } />
                  </header>
              </div>
          </Fragment>

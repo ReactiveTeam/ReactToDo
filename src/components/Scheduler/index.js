@@ -80,7 +80,7 @@ export default class Sheduler extends Component {
                  <main>
                      <header>
                          <h1>Планировщик задач</h1>
-                         <button onClick = { this.openSettings } />
+                         <button onMouseDown = { this.openSettings } />
                          <input placeholder = 'Поиск' type = 'text' />
                      </header>
                      <section>
