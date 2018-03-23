@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import Scheduler from 'components/Scheduler';
+import Settings from 'components/Settings';
 
 import Task from '../../components/Tasker'; // Task class
+import Storage from '../../utils/Storage';
 
 import Logger from 'prologger';
 const logger = new Logger({ from: 'App' });
@@ -10,11 +12,20 @@ const { log } = logger;
 
 export default class App extends Component {
     state = {
-        tasks: [],
+        tasks:    [],
+        settings: true,
     }
 
     componentDidMount = () => {
+        Storage._load();
         this.setState({ tasks: [new Task('Тестовая задача')]});
+    }
+
+    /** Переключатель видимости окошка настроек
+     * @param  {bool} mode - (true - открыто);(false - скрыто)
+     */
+    toggleSettings = (mode) => {
+        this.setState({ settings: Boolean(mode) });
     }
 
     /** Переключатель звезданутых задач
@@ -59,13 +70,13 @@ export default class App extends Component {
 
     addTask = (message) => {
         this.setState((prev) => ({
-            tasks: [new Task(message), ...prev.tasks],
+            tasks: [new Task(message), ...prev.tasks], // Добавляет задачу в начало списка
         }));
     }
 
     removeTask = (id) => {
         this.setState((prev) => ({
-            tasks: prev.tasks.filter((el) => el.id !== id), // Пропускает всё, кроме ID
+            tasks: prev.tasks.filter((el) => el.id !== id), // Пропускает всё, кроме ID удаляемой задачи
         }));
     }
 
@@ -77,13 +88,16 @@ export default class App extends Component {
 
     render () {
         return (
-            <Scheduler
-                addTask = { this.addTask }
-                removeTask = { this.removeTask }
-                tasks = { this.state.tasks }
-                toggleCheck = { this.toggleCheck }
-                toggleStar = { this.toggleStar }
-            />
+            <Fragment>
+                <Settings show = { this.state.settings } />
+                <Scheduler
+                    addTask = { this.addTask }
+                    removeTask = { this.removeTask }
+                    tasks = { this.state.tasks }
+                    toggleCheck = { this.toggleCheck }
+                    toggleStar = { this.toggleStar }
+                />
+            </Fragment>
         );
     }
 }

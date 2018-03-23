@@ -62,10 +62,10 @@ export default class Sheduler extends Component {
 
          const tasklist = tasks.map((e, i) => (<Task
              completed = { e.checked }
-             taskid = { e.id }
-             key = { i } // eslint-disable-line
-             removeTask = { removeTask }
+             key = { i }
+             removeTask = { removeTask } // eslint-disable-line
              stared = { e.stared }
+             taskid = { e.id }
              text = { e.message }
              toggleCheck = { toggleCheck }
              toggleStar = { toggleStar }
@@ -77,6 +77,7 @@ export default class Sheduler extends Component {
                  <main>
                      <header>
                          <h1>Планировщик задач</h1>
+                         <button />
                          <input placeholder = 'Поиск' type = 'text' />
                      </header>
                      <section>
@@ -96,7 +97,7 @@ export default class Sheduler extends Component {
                          </ul>
                      </section>
                      <footer>
-                         <span />
+                         {/* <span>Все задачи выполнены</span> */}
                          <code />
                      </footer>
                  </main>

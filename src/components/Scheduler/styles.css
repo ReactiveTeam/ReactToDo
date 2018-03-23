@@ -67,6 +67,18 @@
   background-position: 95% 50%;
 }
 
+.scheduler main header button {
+  width: 23px;
+  height: 23px;
+  background: transparent;
+  background-image: url("../../theme/assets/settings.svg");
+  border: 0;
+  background-repeat: no-repeat;
+  margin-top: 8px;
+  position: absolute;
+  left: 58%;
+}
+
 .scheduler main section {
   margin-bottom: 3.1rem;
 }

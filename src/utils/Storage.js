@@ -5,9 +5,28 @@
  * https://opensource.org/licenses/MIT
  */
 
-class Storage {
-	static save(){}
-	static load(){}
-}
+//FIXME: Столько костылей я ещё в жизни не видел...
+
+const Storage = {
+    _save: () => {
+        if (!window.localStorage) throw new Error('Браузер какого года Вы используете?');
+
+        const data = JSON.stringify(this.a);
+
+        localStorage.setItem('storage', data);
+    },
+    _load: () => {
+        if (!window.localStorage) throw new Error('Браузер какого года Вы используете?');
+
+        let data = localStorage.getItem('storage');
+
+        if (!data) {
+            Storage._save();
+            data = {};
+        }
+
+        Object.assign(this.a, JSON.parse(data)); //TODO: Try/Catch
+    },
+};
 
 export default Storage;

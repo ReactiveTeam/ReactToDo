@@ -57,7 +57,6 @@ export default class Task extends Component {
          const toggleCheck = () => this.props.toggleCheck(taskid);
          const removeTask = () => this.props.removeTask(taskid);
 
-
          return (
              <li className = { [Styles.task, completed ? Styles.completed : null].join(' ') }>
                  <div>
