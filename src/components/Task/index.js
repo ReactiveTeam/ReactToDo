@@ -50,11 +50,13 @@ export default class Task extends Component {
 
 
           return (
-              <li className = { Styles.task }>
-                  <div className = { Styles.completed }>
+              <li className = { [Styles.task, completed ? Styles.completed : null].join(' ') }>
+                  <div>
                       <Checkbox checked = { completed } onClick = { this.onClick } />
                       {/* <input type = 'text' value = { text } /> */}
                       <span>{text}</span>
+                  </div>
+                  <div>
                       <Star onClick = { this.onStar } />
                       <Edit onClick = { this.onEdit } />
                       <Delete onClick = { this.onRemove } />

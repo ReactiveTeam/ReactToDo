@@ -6,10 +6,10 @@
  */
 
 class Tasker {
-    constructor (message, checked = false, stared = false) {
-        this.stared = false;
-        this.message = '';
-        this.checked = false;
+    constructor (message, checked = true, stared = false) {
+        this.stared = stared;
+        this.message = message;
+        this.checked = checked;
     }
 }
 

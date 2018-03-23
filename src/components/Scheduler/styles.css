@@ -103,7 +103,7 @@
   margin: 0;
   padding: 0;
   max-height: 37rem;
-  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .scheduler main footer {

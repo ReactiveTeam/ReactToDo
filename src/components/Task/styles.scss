@@ -14,6 +14,7 @@
     box-shadow: 0 0.2rem 0.6rem $rgbaColor1;
     font-size: 2rem;
     font-weight: 400;
+    overflow: hidden;
 
     & div span {
         cursor: pointer;
@@ -23,10 +24,12 @@
         display: flex;
         width: 65rem;
 
-        & span {
+        & span:not([style]) {
             display: flex;
             align-items: center;
             margin-right: 1.9rem;
+            width: 100%;
+            margin-left: 1.9rem;
         }
 
         & input {
@@ -37,7 +40,7 @@
 
     & > div:last-child {
         & span {
-            margin-left: 1.7rem;
+            margin-left: 1.0rem;
         }
     }
 }

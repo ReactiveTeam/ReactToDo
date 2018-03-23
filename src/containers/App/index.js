@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Scheduler from 'components/Scheduler';
 
-import Task from '../../components/Task.js'; // Task class
+import Task from '../../components/Tasker'; // Task class
 
 export default class App extends Component {
     state = {
