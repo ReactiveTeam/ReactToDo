@@ -10,6 +10,9 @@ import Logger from 'prologger';
 const logger = new Logger({ from: 'App' });
 const { log } = logger;
 
+/* eslint-disable max-statements-per-line */
+// По причине того, что break писать на отдельной строке не выгодно, так как при его отсутствии кейсы пишутся один за другим
+
 export default class App extends Component {
     state = {
         tasks:    [],
@@ -34,17 +37,22 @@ export default class App extends Component {
      */
     toggleStar = (id, toggle = 0) => {
         const { tasks } = this.state;
+        const index = tasks.map((e) => e.id).indexOf(id);
 
-        if (toggle === -1)
-            tasks[id].stared = false;
-        else if (toggle === 0)
-            tasks[id].stared = !tasks[id].stared;
-        else if (toggle === 1)
-            tasks[id].stared = true;
-        else
-            throw new Error('[App->toggleStar] Неизвестное значение toggle! Возможно, это баг...');
+        if (index < 0) throw new Error('Вы пометили несуществующее задание =D');
 
-        log(`Переключил выжность задачи ${id} в положение ${tasks[id].stared} по по команде ${toggle}`, { from: 'App->toggleStar' });
+        switch (toggle) {
+            case -1:
+                tasks[index].stared = false; break;
+            case 0:
+                tasks[index].stared = !tasks[index].stared; break;
+            case 1:
+                tasks[index].stared = true; break;
+            default:
+                throw new Error('[App->toggleStar] Неизвестное значение toggle! Возможно, это баг...');
+        }
+
+        log(`Переключил выжность задачи ${id} в положение ${tasks[index].stared} по по команде ${toggle}`, { from: 'App->toggleStar' });
         this.setState({ tasks });
     }
 
@@ -54,17 +62,20 @@ export default class App extends Component {
      */
     toggleCheck = (id, toggle = 0) => {
         const { tasks } = this.state;
+        const index = tasks.map((e) => e.id).indexOf(id);
+
+        if (index < 0) throw new Error('Вы выполнили несуществующее задание =D');
 
         if (toggle === -1)
-            tasks[id].checked = false;
+            tasks[index].checked = false;
         else if (toggle === 0)
-            tasks[id].checked = !tasks[id].checked;
+            tasks[index].checked = !tasks[index].checked;
         else if (toggle === 1)
-            tasks[id].checked = true;
+            tasks[index].checked = true;
         else
             throw new Error('[App->toggleStar] Неизвестное значение toggle! Возможно, это баг...');
 
-        log(`Переключил задачу ${id} в положение ${tasks[id].checked} по по команде ${toggle}`, { from: 'App->toggleCheck' });
+        log(`Переключил задачу ${id} в положение ${tasks[index].checked} по по команде ${toggle}`, { from: 'App->toggleCheck' });
         this.setState({ tasks });
     }
 
@@ -95,8 +106,6 @@ export default class App extends Component {
             Task.sort(tasks.filter((el) => !el.stared && !el.checked)), // Обычные задания
             Task.sort(tasks.filter((el) => el.checked)) // Выполненные задания
         ];
-
-        debugger;
 
 
         return a;
