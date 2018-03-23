@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2018 PROPHESSOR
- * 
+ *
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-class Task {
+class Tasker {
     constructor (message, checked = false, stared = false) {
         this.stared = false;
         this.message = '';
@@ -13,4 +13,4 @@ class Task {
     }
 }
 
-export default Task;
+export default Tasker;
