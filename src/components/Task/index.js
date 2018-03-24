@@ -60,14 +60,15 @@ export default class Task extends Component {
          return (
              <li className = { [Styles.task, completed ? Styles.completed : null].join(' ') }>
                  <div>
-                     <Checkbox checked = { completed } onClick = { toggleCheck } />
+                     {/* FIXME: Hardcoded from palette.scss */}
+                     <Checkbox checked = { completed } color1 = '#3B8EF3' color2 = '#FFF' onClick = { toggleCheck } />
                      {/* <input type = 'text' value = { text } /> */}
                      <span>{text}</span>
                  </div>
                  <div>
-                     <Star checked = { stared } onClick = { toggleStar } />
-                     <Edit onClick = { this.onEdit } />
-                     <Delete onClick = { removeTask } />
+                     <Star checked = { stared } color1 = '#3B8EF3' onClick = { toggleStar } />
+                     <Edit color1 = '#3B8EF3' onClick = { this.onEdit } />
+                     <Delete color1 = '#3B8EF3' onClick = { removeTask } />
                  </div>
              </li>
          );
