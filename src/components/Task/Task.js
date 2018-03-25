@@ -6,8 +6,8 @@
  */
 
 import React from 'react';
-import Task from '../components/Task';
-import ID from '../utils/Id';
+import Task from '.';
+import ID from '../../utils/Id';
 
 class Tasker {
     constructor (message, checked = false, stared = false) {

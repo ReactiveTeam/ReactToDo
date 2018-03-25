@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import Scheduler from 'components/Scheduler';
 import Settings from 'components/Settings';
 
-import Task from '../../components/Tasker'; // Task class
+import TaskClass from '../../components/Task/Task';
 import Storage from '../../utils/Storage';
 
 import Logger from 'prologger';
@@ -25,8 +25,8 @@ export default class App extends Component {
 
     componentDidMount = () => {
         Storage._load();
-        // this.setState({ tasks: [new Task('Тестовая задача')]});
-        this.setState({ tasks: TODO.map((el) => new Task(el)) });
+        // this.setState({ tasks: [new TaskClass('Тестовая задача')]});
+        this.setState({ tasks: TODO.map((el) => new TaskClass(el)) });
     }
 
     /** Переключатель видимости окошка настроек
@@ -86,7 +86,7 @@ export default class App extends Component {
 
     addTask = (message) => {
         this.setState((prev) => ({
-            tasks: [new Task(message), ...prev.tasks], // Добавляет задачу в начало списка
+            tasks: [new TaskClass(message), ...prev.tasks], // Добавляет задачу в начало списка
         }));
     }
 
@@ -107,9 +107,9 @@ export default class App extends Component {
 
 
         const a = [
-            Task.sort(tasks.filter((el) => el.stared && !el.checked)), // Важные задания
-            Task.sort(tasks.filter((el) => !el.stared && !el.checked)), // Обычные задания
-            Task.sort(tasks.filter((el) => el.checked)) // Выполненные задания
+            /* TaskClass.sort */tasks.filter((el) => el.stared && !el.checked), // Важные задания
+            /* TaskClass.sort */tasks.filter((el) => !el.stared && !el.checked), // Обычные задания
+            /* TaskClass.sort */tasks.filter((el) => el.checked) // Выполненные задания
         ];
 
 
