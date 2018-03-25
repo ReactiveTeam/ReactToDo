@@ -11,10 +11,38 @@ import ID from '../../utils/Id';
 
 class Tasker {
     constructor (message, checked = false, stared = false) {
+        if (typeof message === 'object') {
+            this.stared = message.stared;
+            this.message = message.message;
+            this.checked = message.checked;
+            this.id = message.id;
+
+            return;
+        }
         this.stared = stared;
         this.message = message;
         this.checked = checked;
         this.id = ID.getId();
+    }
+
+    static toJSON (data) {
+        if (data instanceof Array) {
+            return JSON.stringify(data.map((e) => ({
+                message: e.message,
+                checked: e.checked,
+                stared:  e.stared,
+                id:      e.id,
+            })));
+        }
+        if (data instanceof Tasker) {
+            return JSON.stringify({
+                message: data.message,
+                checked: data.checked,
+                stared:  data.stared,
+                id:      data.id,
+            });
+        }
+        throw new Error('Не могу преобразовать в JSON строку эту странную структуру данных...');
     }
 
     /** Сортирует задачи по алфавиту

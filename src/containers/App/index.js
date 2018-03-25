@@ -24,9 +24,17 @@ export default class App extends Component {
     }
 
     componentDidMount = () => {
-        Storage._load();
+        // Storage._load();
         // this.setState({ tasks: [new TaskClass('Тестовая задача')]});
-        this.setState({ tasks: TODO.map((el) => new TaskClass(el)) });
+        //TODO: Вынести логику в класс Storage
+        const tasks = JSON.parse(localStorage.getItem('tasks'));
+
+        this.setState({ tasks: tasks.map((el) => new TaskClass(el)) }); //TODO
+    }
+
+    //TODO:
+    saveTasks = () => {
+        localStorage.setItem('tasks', TaskClass.toJSON(this.state.tasks));
     }
 
     /** Переключатель видимости окошка настроек
@@ -59,6 +67,7 @@ export default class App extends Component {
 
         log(`Переключил выжность задачи ${id} в положение ${tasks[index].stared} по по команде ${toggle}`, { from: 'App->toggleStar' });
         this.setState({ tasks });
+        this.saveTasks();
     }
 
     /** Переключатель выполненных задач
@@ -82,18 +91,21 @@ export default class App extends Component {
 
         log(`Переключил задачу ${id} в положение ${tasks[index].checked} по по команде ${toggle}`, { from: 'App->toggleCheck' });
         this.setState({ tasks });
+        this.saveTasks();
     }
 
     addTask = (message) => {
         this.setState((prev) => ({
             tasks: [new TaskClass(message), ...prev.tasks], // Добавляет задачу в начало списка
         }));
+        this.saveTasks();
     }
 
     removeTask = (id) => {
         this.setState((prev) => ({
             tasks: prev.tasks.filter((el) => el.id !== id), // Пропускает всё, кроме ID удаляемой задачи
         }));
+        this.saveTasks();
     }
 
     /** Сортирует текущие задания на 3 списка
