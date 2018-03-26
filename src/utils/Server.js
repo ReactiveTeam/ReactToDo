@@ -10,15 +10,40 @@
 import CONFIG from 'config.js';
 
 class Server {
- star = (id) => {}
+ star = (id) => {
+     fetch(CONFIG.api.url, {
+         method: 'UPDATE',
+     })
+         .then();
+ }
  load = () => {
      fetch(CONFIG.api.url, {
-		 method: 'GET'
+		 method: 'GET',
 	 })
-	 .then()
+	 .then();
  }
-    check = (id) => {}
-    add = (message) => {}
-    remove = (id) => {}
-    edit = (id, message, checked, stared) => {}
+    check = (id) => {
+        fetch(CONFIG.api.url, {
+            method: 'UPDATE',
+        })
+            .then();
+    }
+    add = (message) => {
+        fetch(CONFIG.api.url, {
+            method: 'POST',
+        })
+            .then();
+    }
+    remove = (id) => {
+        fetch(CONFIG.api.url, {
+            method: 'DELETE',
+        })
+            .then();
+    }
+    edit = (id, message, checked, stared) => {
+        fetch(CONFIG.api.url, {
+            method: 'UPDATE',
+        })
+            .then();
+    }
 }

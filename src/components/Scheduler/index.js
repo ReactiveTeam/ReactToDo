@@ -76,13 +76,13 @@ export default class Sheduler extends Component {
 
          tasklist = tasklist.concat( // Объединяем массивы задач в один с нужным нам порядком
              tasks[0]
-                 .filter((e) => e.message.includes(this.state.search))
+                 .filter((e) => e.message.toLowerCase().includes(this.state.search.toLowerCase()))
                  .map((e) => TaskClass.toJSX(e, removeTask, toggleCheck, toggleStar)), // Важные задачи
              tasks[1]
-                 .filter((e) => e.message.includes(this.state.search))
+                 .filter((e) => e.message.toLowerCase().includes(this.state.search.toLowerCase()))
                  .map((e) => TaskClass.toJSX(e, removeTask, toggleCheck, toggleStar)), // Обычные задачи
              tasks[2]
-                 .filter((e) => e.message.includes(this.state.search))
+                 .filter((e) => e.message.toLowerCase().includes(this.state.search.toLowerCase()))
                  .map((e) => TaskClass.toJSX(e, removeTask, toggleCheck, toggleStar)), // Выполненные задачи
          );
 
