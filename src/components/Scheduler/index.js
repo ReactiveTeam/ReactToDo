@@ -24,7 +24,8 @@ export default class Sheduler extends Component {
     }
 
     state = {
-        value: '',
+        value:  '',
+        search: '',
     }
 
     /**
@@ -61,15 +62,28 @@ export default class Sheduler extends Component {
          }
      }
 
+     onSearchChange = (event) => {
+         log(`onSearchChange {${event.target.value}}`, { level: 'change' });
+         if (event.target.value.length < 47) {
+             this.setState({ search: event.target.value });
+         }
+     }
+
      render () {
          const { tasks, toggleCheck, toggleStar, removeTask } = this.props;
 
          let tasklist = [];
 
          tasklist = tasklist.concat( // Объединяем массивы задач в один с нужным нам порядком
-             tasks[0].map((e) => TaskClass.toJSX(e, removeTask, toggleCheck, toggleStar)), // Важные задачи
-             tasks[1].map((e) => TaskClass.toJSX(e, removeTask, toggleCheck, toggleStar)), // Обычные задачи
-             tasks[2].map((e) => TaskClass.toJSX(e, removeTask, toggleCheck, toggleStar)), // Выполненные задачи
+             tasks[0]
+                 .filter((e) => e.message.includes(this.state.search))
+                 .map((e) => TaskClass.toJSX(e, removeTask, toggleCheck, toggleStar)), // Важные задачи
+             tasks[1]
+                 .filter((e) => e.message.includes(this.state.search))
+                 .map((e) => TaskClass.toJSX(e, removeTask, toggleCheck, toggleStar)), // Обычные задачи
+             tasks[2]
+                 .filter((e) => e.message.includes(this.state.search))
+                 .map((e) => TaskClass.toJSX(e, removeTask, toggleCheck, toggleStar)), // Выполненные задачи
          );
 
 
@@ -79,7 +93,7 @@ export default class Sheduler extends Component {
                      <header>
                          <h1>Планировщик задач</h1>
                          <button onMouseDown = { this.openSettings } />
-                         <input placeholder = 'Поиск' type = 'text' />
+                         <input placeholder = 'Поиск' type = 'text' onChange = { this.onSearchChange } />
                      </header>
                      <section>
                          <form onSubmit = { this.onSubmit }>
