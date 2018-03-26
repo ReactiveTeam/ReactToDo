@@ -35,6 +35,7 @@ export default class App extends Component {
     //TODO:
     saveTasks = () => {
         localStorage.setItem('tasks', TaskClass.toJSON(this.state.tasks));
+        log('Список задач успешно сохранен', { from: 'App->savrTasks', level: 'save' });
     }
 
     /** Переключатель видимости окошка настроек
@@ -66,8 +67,7 @@ export default class App extends Component {
         }
 
         log(`Переключил выжность задачи ${id} в положение ${tasks[index].stared} по по команде ${toggle}`, { from: 'App->toggleStar' });
-        this.setState({ tasks });
-        this.saveTasks();
+        this.setState({ tasks }, this.saveTasks);
     }
 
     /** Переключатель выполненных задач
@@ -90,22 +90,28 @@ export default class App extends Component {
             throw new Error('[App->toggleStar] Неизвестное значение toggle! Возможно, это баг...');
 
         log(`Переключил задачу ${id} в положение ${tasks[index].checked} по по команде ${toggle}`, { from: 'App->toggleCheck' });
-        this.setState({ tasks });
-        this.saveTasks();
+        this.setState({ tasks }, this.saveTasks);
     }
 
     addTask = (message) => {
         this.setState((prev) => ({
             tasks: [new TaskClass(message), ...prev.tasks], // Добавляет задачу в начало списка
-        }));
-        this.saveTasks();
+        }), this.saveTasks);
+    }
+
+    editTask = (id, message) => {
+        const { tasks } = this.state;
+        const index = tasks.map((e) => e.id).indexOf(id);
+
+        tasks[index].message = message;
+        log(`Задача ${id} изменена на ${tasks[index].message}`, { from: 'App->editTask' });
+        this.setState({ tasks }, this.saveTasks);
     }
 
     removeTask = (id) => {
         this.setState((prev) => ({
             tasks: prev.tasks.filter((el) => el.id !== id), // Пропускает всё, кроме ID удаляемой задачи
-        }));
-        this.saveTasks();
+        }), this.saveTasks);
     }
 
     /** Сортирует текущие задания на 3 списка
@@ -134,6 +140,7 @@ export default class App extends Component {
                 <Settings show = { this.state.settings } toggleShow = { this.toggleSettings } />
                 <Scheduler
                     addTask = { this.addTask }
+                    editTask = { this.editTask }
                     removeTask = { this.removeTask }
                     tasks = { this.sortTasks() }
                     toggleCheck = { this.toggleCheck }

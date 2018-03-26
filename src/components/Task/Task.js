@@ -57,17 +57,19 @@ class Tasker {
 
     /** Возвращает JSX представление задачи
      * @param  {Tasker} task - Задача
+     * @param  {function} editTask - Функция
      * @param  {function} removeTask - Функция
      * @param  {function} toggleCheck - Функция
      * @param  {function} toggleStar - Функция
      * @returns {JSX} JSX представление
      */
-    static toJSX (task, removeTask, toggleCheck, toggleStar) {
+    static toJSX (task, { editTask, removeTask, toggleCheck, toggleStar }) {
         if (!(task instanceof Tasker)) throw new TypeError('Переданное вами чудо не похоже на задачу!');
 
         return (
             <Task
                 completed = { task.checked }
+                editTask = { editTask }
                 key = { task.id }
                 removeTask = { removeTask }
                 stared = { task.stared }
