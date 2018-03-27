@@ -59,7 +59,7 @@ export default class Task extends Component {
         const removeTask = () => this.props.removeTask(taskid);
 
         const task = this.state.editMode
-            ? <input type = 'text' value = { this.state.editValue } onChange = { this.onChange } onKeyDown = { this.onKeyDown } />
+            ? <input autoFocus type = 'text' value = { this.state.editValue } onChange = { this.onChange } onKeyDown = { this.onKeyDown } />
             : <span>{text}</span>;
 
         return (
