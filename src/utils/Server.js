@@ -77,10 +77,27 @@ class Server {
         });
     }
     remove = (id) => {
-        fetch(CONFIG.api.url, {
-            method: 'DELETE',
-        })
-            .then();
+        if (!id) throw new TypeError('Но я не знаю, что мне приказать уничтожить...');
+
+        return new Promise((res, rej) => {
+            fetch(`${CONFIG.api.url}/${id}`, {
+                method:  'DELETE',
+                headers: {
+                    'Authorization': '',
+                },
+            })
+                .then((response) => {
+                    if (res.status !== 204) {
+                        warn(`Внимание! В ответ на создание задачи сервер вернул не 204, а ${response.status}`, { level: 'not200' });
+                        throw response.json();
+                    }
+                    success('Задача успешно удалена с сервера!', { level: 'ok' });
+
+                    return response.json();
+                })
+                .then(() => res())
+                .catch((response) => rej(response)); // {message:String}
+        });
     }
     edit = (id, message, checked, stared) => {
         fetch(CONFIG.api.url, {
