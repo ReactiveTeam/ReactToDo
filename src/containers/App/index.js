@@ -5,13 +5,15 @@ import Settings from 'components/Settings';
 
 import TaskClass from '../../components/Task/Task';
 import Storage from '../../utils/Storage';
+import Server from '../../utils/Server';
 
 import Logger from 'prologger';
+import config from '../../config';
 const logger = new Logger({ from: 'App' });
 const { log } = logger;
 
 // TODO
-import TODO from './todo';
+// import TODO from './todo';
 // TODO
 
 /* eslint-disable max-statements-per-line */
@@ -94,9 +96,28 @@ export default class App extends Component {
     }
 
     addTask = (message) => {
-        this.setState((prev) => ({
-            tasks: [new TaskClass(message), ...prev.tasks], // Добавляет задачу в начало списка
-        }), this.saveTasks);
+        if (!config.api.enabled) { // В случае Апокалипсиса приложение тоже должно работать!
+            return this.setState((prev) => ({
+                tasks: [new TaskClass(message), ...prev.tasks], // Добавляет задачу в начало списка
+            }));
+        }
+
+        Server
+            .add(message)
+            .then((resp) => {
+                this.setState((prev) => ({
+                    tasks: [
+                        new TaskClass({
+                            message: resp.message,
+                            id:      resp.id,
+                            checked: resp.completed,
+                            stared:  resp.favorite,
+                        }),
+                        ...prev.tasks
+                    ], // Добавляет задачу в начало списка
+                }));
+            })
+            .catch((e) => log(e));
     }
 
     editTask = (id, message) => {

@@ -7,7 +7,7 @@
 
 export default {
     api: {
-        enabled: true, // Работа с сервером
+        enabled: false, // Работа с сервером
         url:     'https://lab.lectrum.io/hw/todo/api',
     },
     socket: {
