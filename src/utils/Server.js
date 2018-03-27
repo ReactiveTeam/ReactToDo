@@ -89,3 +89,5 @@ class Server {
             .then();
     }
 }
+
+export default new Server();
