@@ -10,7 +10,10 @@ import Server from '../../utils/Server';
 import Catcher from './onerror';
 import Logger from 'prologger';
 import config from '../../config';
-const logger = new Logger({ from: 'App' });
+const logger = new Logger({ from:   'App',
+    levels: [
+        'ok'
+    ]});
 const { log } = logger;
 
 // TODO
@@ -96,6 +99,9 @@ export default class App extends Component {
         this.setState({ tasks }, this.saveTasks);
     }
 
+    /** Переключает все задачи в положение "выполенено"
+     * DANGER - очень опасная возможность, так как может быть использована случайно, при наличии большого списка задач
+     */
     checkAll = () => {
         const { tasks } = this.state;
 
@@ -104,6 +110,7 @@ export default class App extends Component {
         }
 
         log(`Все задачи выполены`, { from: 'App->checkAll', level: 'ok' });
+        this.setState({ tasks }, this.saveTasks);
     }
 
     addTask = (message) => {
@@ -172,6 +179,7 @@ export default class App extends Component {
                 <Settings show = { this.state.settings } toggleShow = { this.toggleSettings } />
                 <Scheduler
                     addTask = { this.addTask }
+                    checkAll = { this.checkAll }
                     editTask = { this.editTask }
                     removeTask = { this.removeTask }
                     tasks = { this.sortTasks() }

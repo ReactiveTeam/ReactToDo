@@ -22,6 +22,7 @@ const { log } = logger;
 export default class Sheduler extends Component {
     static propTypes = {
         addTask:        type.func.isRequired,
+        checkAll:       type.func.isRequired,
         tasks:          type.array.isRequired, // Can't use arrayOf
         toggleSettings: type.func.isRequired,
     }
@@ -29,6 +30,8 @@ export default class Sheduler extends Component {
     state = {
         value:  '',
         search: '',
+
+        allChecked: false,
     }
 
     /**
@@ -72,8 +75,14 @@ export default class Sheduler extends Component {
          }
      }
 
+     onCheckAll = () => {
+         this.setState({ allChecked: true }, () => setTimeout(() => this.setState({ allChecked: false }), 1000));
+         this.props.checkAll();
+     }
+
      render () {
          const { tasks, toggleCheck, toggleStar, removeTask, editTask } = this.props;
+         const { value, allChecked } = this.state;
 
          let tasklist = [];
 
@@ -103,10 +112,10 @@ export default class Sheduler extends Component {
                              <form onSubmit = { this.onSubmit }>
                                  <input
                                      autoFocus
-                                     className = { this.state.value.length === 46 ? Styles.overflow : null }
+                                     className = { value.length === 46 ? Styles.overflow : null }
                                      placeholder = 'Описание моей новой задачи'
                                      type = 'text'
-                                     value = { this.state.value }
+                                     value = { value }
                                      onChange = { this.onInputChange }
                                  />
                                  <input type = 'submit' value = 'Добавить задачу' />
@@ -116,7 +125,7 @@ export default class Sheduler extends Component {
                              </ul>
                          </section>
                          <footer>
-                             <Checkbox color1 = '#3B8EF3' color2 = '#FFF' />
+                             <Checkbox checked = { allChecked } color1 = '#656565' color2 = '#FFF' onClick = { this.onCheckAll } />
                              <code>Все задачи выполнены</code>
                          </footer>
                      </main>
