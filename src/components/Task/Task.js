@@ -28,21 +28,21 @@ class Tasker {
     static toJSON (data) {
         if (data instanceof Array) {
             return JSON.stringify(data.map((e) => ({
-                message: e.message,
-                checked: e.checked,
-                stared:  e.stared,
-                id:      e.id,
+                message:   e.message,
+                completed: e.completed || e.checked,
+                stared:    e.stared || e.favorite,
+                id:        e.id,
             })));
         }
         if (data instanceof Tasker) {
             return JSON.stringify({
-                message: data.message,
-                checked: data.checked,
-                stared:  data.stared,
-                id:      data.id,
+                message:   data.message,
+                completed: data.completed,
+                stared:    data.stared,
+                id:        data.id,
             });
         }
-        throw new Error('Не могу преобразовать в JSON строку эту странную структуру данных...');
+        throw new TypeError('Не могу преобразовать в JSON строку эту странную структуру данных...');
     }
 
     /** Сортирует задачи по алфавиту

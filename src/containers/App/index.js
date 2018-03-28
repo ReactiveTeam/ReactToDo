@@ -19,7 +19,7 @@ const logger = new Logger({ from:   'App',
     levels: [
         'ok'
     ]});
-const { log } = logger;
+const { log, error } = logger;
 
 // TODO
 // import TODO from './todo';
@@ -39,7 +39,6 @@ export default class App extends Component {
         token: type.string.isRequired,
     }
 
-
     state = {
         tasks:    [],
         settings: false,
@@ -49,12 +48,20 @@ export default class App extends Component {
         return options;
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         // this.setState({ tasks: [new TaskClass('Тестовая задача')]});
         //TODO: Вынести логику в класс Storage
         const tasks = JSON.parse(localStorage.getItem('tasks'));
 
         this.setState({ tasks: tasks.map((el) => new TaskClass(el)) }); //TODO
+
+        if (Storage.get('api_enabled')) {
+            const sertasks = await Server.load();
+
+            if (!sertasks.data) return error('Видимо, произошла ошибка при получении задач с сервера...');
+
+            this.setState({ tasks: sertasks.data.map((el) => new TaskClass(el)) }); //TODO
+        }
     }
 
     //TODO:
@@ -134,29 +141,28 @@ export default class App extends Component {
         this.setState({ tasks }, this.saveTasks);
     }
 
-    addTask = (message) => {
+    addTask = async (message) => {
         if (!Storage.get('api_enabled')) { // В случае Апокалипсиса приложение тоже должно работать!
             return this.setState((prev) => ({
                 tasks: [new TaskClass(message), ...prev.tasks], // Добавляет задачу в начало списка
-            }));
+            }), this.saveTasks);
         }
 
-        Server
-            .add(message)
-            .then((resp) => {
-                this.setState((prev) => ({
-                    tasks: [
-                        new TaskClass({
-                            message: resp.message,
-                            id:      resp.id,
-                            checked: resp.completed,
-                            stared:  resp.favorite,
-                        }),
-                        ...prev.tasks
-                    ], // Добавляет задачу в начало списка
-                }));
-            })
-            .catch((e) => log(e));
+        const response = await Server.add(message);
+
+        if (!response.data) return error('Видимо, произошла ошибка при отправке задачи на сервер...', { from: 'Scheduler->addTask', level: 'error' });
+
+        this.setState((prev) => ({
+            tasks: [
+                new TaskClass({
+                    message: response.data.message,
+                    id:      response.data.id,
+                    checked: response.data.completed,
+                    stared:  response.data.favorite,
+                }),
+                ...prev.tasks
+            ], // Добавляет задачу в начало списка
+        }), this.saveTasks);
     }
 
     editTask = (id, message) => {
@@ -168,10 +174,14 @@ export default class App extends Component {
         this.setState({ tasks }, this.saveTasks);
     }
 
-    removeTask = (id) => {
-        this.setState((prev) => ({
-            tasks: prev.tasks.filter((el) => el.id !== id), // Пропускает всё, кроме ID удаляемой задачи
-        }), this.saveTasks);
+    removeTask = async (id) => {
+        if (Storage.get('api_enabled')) await Server.remove(id);
+
+        console.log(123);
+
+        this.setState({
+            tasks: this.state.tasks.filter((el) => el.id !== id), // Пропускает всё, кроме ID удаляемой задачи
+        }, this.saveTasks);
     }
 
     /** Сортирует текущие задания на 3 списка
