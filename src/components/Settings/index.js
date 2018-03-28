@@ -83,8 +83,8 @@ export default class Settings extends Component {
                         <label>Token:<br />
                             <input
                                 className = { error ? Styles.error : null }
-                                type = 'text'
-                                value = { active ? value : value.replace(/./g, '*') }
+                                type = { active ? 'text' : 'password' }
+                                value = { value }
                                 onBlur = { this.onBlur }
                                 onChange = { this.onChange }
                                 onFocus = { this.onFocus }
