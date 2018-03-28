@@ -7,6 +7,7 @@
 
 import React, { Component, Fragment } from 'react';
 import type from 'prop-types';
+import { CSSTransition } from 'react-transition-group';
 
 import Styles from './styles.scss';
 

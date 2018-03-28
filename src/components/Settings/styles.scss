@@ -6,6 +6,7 @@
  */
 
 @import '../../theme/palette';
+@import '../../theme/animations';
 ////////////////////////////////////////////////////
 // ______________________________________________ //
 //  [ОСТОРОЖНО] Эта SCSS ёлка может сломать мозг  //
@@ -40,10 +41,10 @@
             font-size: 2.2rem;
             color: $paletteColor5;
             input {
+                width: 100%;
                 outline: none;
                 height: 4.2rem;
                 font-size: 2rem;
-                width: 100%;
                 margin-top: 15px;
                 margin-right: 25px;
                 padding: 0 1.4rem;
@@ -117,4 +118,13 @@ input[type='button'] {
     color: $paletteColor9;
     border-radius: 0.5rem;
     background: transparent;
+}
+
+.animateInStart {
+    opacity: 0.01;
+}
+
+.animateInEnd {
+    transition: opacity 5000ms $cubic1;
+    opacity: 1;
 }

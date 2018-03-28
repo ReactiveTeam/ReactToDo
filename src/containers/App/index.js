@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Scheduler from 'components/Scheduler';
 import Settings from 'components/Settings';
@@ -10,6 +11,9 @@ import Server from '../../utils/Server';
 import Catcher from './onerror';
 import Logger from 'prologger';
 import config from '../../config';
+
+import SettingsStyles from '../../components/Settings/styles.scss';
+
 const logger = new Logger({ from:   'App',
     levels: [
         'ok'
@@ -103,6 +107,8 @@ export default class App extends Component {
      * DANGER - очень опасная возможность, так как может быть использована случайно, при наличии большого списка задач
      */
     checkAll = () => {
+        if (!confirm('Вы действительно хотите пометить ВСЕ задания как выполненные?')) return; // FIXME:
+
         const { tasks } = this.state;
 
         for (const task of tasks) {
@@ -176,7 +182,14 @@ export default class App extends Component {
     render () {
         return (
             <Catcher>
-                <Settings show = { this.state.settings } toggleShow = { this.toggleSettings } />
+                <CSSTransition
+                    classNames = { {
+                        enter:       SettingsStyles.animateInStart,
+                        enterActive: SettingsStyles.animateInEnd,
+                    } }
+                    timeout = { { enter: 5000 } }>
+                    <Settings show = { this.state.settings } toggleShow = { this.toggleSettings } />
+                </CSSTransition>
                 <Scheduler
                     addTask = { this.addTask }
                     checkAll = { this.checkAll }

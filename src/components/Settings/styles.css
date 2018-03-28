@@ -40,10 +40,10 @@
 }
 
 .settings header label input {
+  width: 100%;
   outline: none;
   height: 4.2rem;
   font-size: 2rem;
-  width: 100%;
   margin-top: 15px;
   margin-right: 25px;
   padding: 0 1.4rem;
@@ -117,4 +117,13 @@ input[type='button'] {
   color: #656565;
   border-radius: 0.5rem;
   background: transparent;
+}
+
+.animateInStart {
+  opacity: 0.01;
+}
+
+.animateInEnd {
+  transition: opacity 5000ms cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  opacity: 1;
 }

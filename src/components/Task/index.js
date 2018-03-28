@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import type from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Checkbox from '../../theme/assets/Checkbox';
 import Delete from '../../theme/assets/Delete';
@@ -64,6 +65,7 @@ export default class Task extends Component {
             : <span>{text}</span>;
 
         return (
+
             <Catcher>
                 <li className = { [Styles.task, completed ? Styles.completed : null].join(' ') }>
                     <div>
@@ -78,6 +80,7 @@ export default class Task extends Component {
                     </div>
                 </li>
             </Catcher>
+            // </CSSTransition>
         );
     }
 }

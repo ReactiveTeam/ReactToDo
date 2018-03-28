@@ -1,4 +1,5 @@
 @import '../../theme/palette';
+@import '../../theme/animations';
 
 .task {
     display: flex;
@@ -62,4 +63,22 @@
             background-color: $paletteColor8;
         }
     }
+}
+
+.animateInStart {
+    opacity: 0.1;
+}
+
+.animateInEnd {
+    opacity: 1;
+    transition: opacity 500ms $cubic1;
+}
+
+.animateOutStart {
+    opacity: 1;
+}
+
+.animateOutEnd {
+    opacity: 0.1;
+    transition: opacity 500ms $cubic1;
 }

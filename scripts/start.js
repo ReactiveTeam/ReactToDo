@@ -74,6 +74,9 @@ choosePort(HOST, DEFAULT_PORT)
         clearConsole();
       }
       console.log(chalk.cyan('Starting the development server...\n'));
+      console.log(chalk.yellow('#######################################################################'))
+      console.log(chalk.red("А Вы, ведь, не проверили сборочные файлы на наличие вирусов? Верно?"))
+      console.log(chalk.yellow('#######################################################################'))
       openBrowser(urls.localUrlForBrowser);
     });
 
