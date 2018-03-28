@@ -2,10 +2,13 @@
 import React, { Component } from 'react';
 import type from 'prop-types';
 
+import Catcher from './onerror';
 import Styles from './styles.scss';
 import TaskClass from '../Task/Task';
 
+
 import Logger from 'prologger';
+import Checkbox from '../../theme/assets/Checkbox';
 const logger = new Logger({
     levels: [ // Уровни вывода лога. TODO: Не забудьте убрать после отладки!
         'submit',
@@ -88,35 +91,37 @@ export default class Sheduler extends Component {
 
 
          return (
-             <div className = { Styles.scheduler }>
-                 <main>
-                     <header>
-                         <h1>Планировщик задач</h1>
-                         <button onMouseDown = { this.openSettings } />
-                         <input placeholder = 'Поиск' type = 'text' onChange = { this.onSearchChange } />
-                     </header>
-                     <section>
-                         <form onSubmit = { this.onSubmit }>
-                             <input
-                                 autoFocus
-                                 className = { this.state.value.length === 46 ? Styles.overflow : null }
-                                 placeholder = 'Описание моей новой задачи'
-                                 type = 'text'
-                                 value = { this.state.value }
-                                 onChange = { this.onInputChange }
-                             />
-                             <input type = 'submit' value = 'Добавить задачу' />
-                         </form>
-                         <ul>
-                             {tasklist}
-                         </ul>
-                     </section>
-                     <footer>
-                         {/* <span>Все задачи выполнены</span> */}
-                         <code />
-                     </footer>
-                 </main>
-             </div>
+             <Catcher>
+                 <div className = { Styles.scheduler }>
+                     <main>
+                         <header>
+                             <h1>Планировщик задач</h1>
+                             <button onMouseDown = { this.openSettings } />
+                             <input placeholder = 'Поиск' type = 'text' onChange = { this.onSearchChange } />
+                         </header>
+                         <section>
+                             <form onSubmit = { this.onSubmit }>
+                                 <input
+                                     autoFocus
+                                     className = { this.state.value.length === 46 ? Styles.overflow : null }
+                                     placeholder = 'Описание моей новой задачи'
+                                     type = 'text'
+                                     value = { this.state.value }
+                                     onChange = { this.onInputChange }
+                                 />
+                                 <input type = 'submit' value = 'Добавить задачу' />
+                             </form>
+                             <ul>
+                                 {tasklist}
+                             </ul>
+                         </section>
+                         <footer>
+                             <Checkbox color1 = '#3B8EF3' color2 = '#FFF' />
+                             <code>Все задачи выполнены</code>
+                         </footer>
+                     </main>
+                 </div>
+             </Catcher>
          );
      }
 }

@@ -1,12 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import Scheduler from 'components/Scheduler';
 import Settings from 'components/Settings';
 
 import TaskClass from '../../components/Task/Task';
-import Storage from '../../utils/Storage';
+// import Storage from '../../utils/Storage';
 import Server from '../../utils/Server';
 
+import Catcher from './onerror';
 import Logger from 'prologger';
 import config from '../../config';
 const logger = new Logger({ from: 'App' });
@@ -91,8 +92,18 @@ export default class App extends Component {
         else
             throw new Error('[App->toggleStar] Неизвестное значение toggle! Возможно, это баг...');
 
-        log(`Переключил задачу ${id} в положение ${tasks[index].checked} по по команде ${toggle}`, { from: 'App->toggleCheck' });
+        log(`Переключил задачу ${id} в положение ${tasks[index].checked} по по команде ${toggle}`, { from: 'App->toggleCheck', level: 'ok' });
         this.setState({ tasks }, this.saveTasks);
+    }
+
+    checkAll = () => {
+        const { tasks } = this.state;
+
+        for (const task of tasks) {
+            task.checked = true;
+        }
+
+        log(`Все задачи выполены`, { from: 'App->checkAll', level: 'ok' });
     }
 
     addTask = (message) => {
@@ -157,7 +168,7 @@ export default class App extends Component {
 
     render () {
         return (
-            <Fragment>
+            <Catcher>
                 <Settings show = { this.state.settings } toggleShow = { this.toggleSettings } />
                 <Scheduler
                     addTask = { this.addTask }
@@ -168,7 +179,7 @@ export default class App extends Component {
                     toggleSettings = { this.toggleSettings }
                     toggleStar = { this.toggleStar }
                 />
-            </Fragment>
+            </Catcher>
         );
     }
 }

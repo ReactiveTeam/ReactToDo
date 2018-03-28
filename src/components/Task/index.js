@@ -7,6 +7,7 @@ import Delete from '../../theme/assets/Delete';
 import Star from '../../theme/assets/Star';
 import Edit from '../../theme/assets/Edit';
 
+import Catcher from './onerror';
 import Styles from './styles.scss';
 import Logger from 'prologger';
 const logger = new Logger({ from: 'Task', showColors: false });
@@ -63,18 +64,20 @@ export default class Task extends Component {
             : <span>{text}</span>;
 
         return (
-            <li className = { [Styles.task, completed ? Styles.completed : null].join(' ') }>
-                <div>
-                    {/* FIXME: Hardcoded from palette.scss */}
-                    <Checkbox checked = { completed } color1 = '#3B8EF3' color2 = '#FFF' onClick = { toggleCheck } />
-                    {task}
-                </div>
-                <div>
-                    <Star checked = { stared } color1 = '#3B8EF3' onClick = { toggleStar } />
-                    <Edit checked = { this.state.editMode } color1 = '#3B8EF3' onClick = { completed ? null : this.toggleEditMode } />
-                    <Delete color1 = '#3B8EF3' onClick = { removeTask } />
-                </div>
-            </li>
+            <Catcher>
+                <li className = { [Styles.task, completed ? Styles.completed : null].join(' ') }>
+                    <div>
+                        {/* FIXME: Hardcoded from palette.scss */}
+                        <Checkbox checked = { completed } color1 = '#3B8EF3' color2 = '#FFF' onClick = { toggleCheck } />
+                        {task}
+                    </div>
+                    <div>
+                        <Star checked = { stared } color1 = '#3B8EF3' onClick = { toggleStar } />
+                        <Edit checked = { this.state.editMode } color1 = '#3B8EF3' onClick = { completed ? null : this.toggleEditMode } />
+                        <Delete color1 = '#3B8EF3' onClick = { removeTask } />
+                    </div>
+                </li>
+            </Catcher>
         );
     }
 }

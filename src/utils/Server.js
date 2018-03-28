@@ -14,24 +14,6 @@ const logger = new Logger({ from: 'Server', showColors: false });
 const { warn, success } = logger;
 
 class Server {
- star = (id) => {
-     fetch(CONFIG.api.url, {
-         method: 'UPDATE',
-     })
-         .then();
- }
- load = () => {
-     fetch(CONFIG.api.url, {
-		 method: 'GET',
-	 })
-	 .then();
- }
-    check = (id) => {
-        fetch(CONFIG.api.url, {
-            method: 'UPDATE',
-        })
-            .then();
-    }
 
     /**
      * {
@@ -100,6 +82,24 @@ class Server {
         });
     }
     edit = (id, message, checked, stared) => {
+        fetch(CONFIG.api.url, {
+            method: 'UPDATE',
+        })
+            .then();
+    }
+    star = (id) => {
+        fetch(CONFIG.api.url, {
+            method: 'UPDATE',
+        })
+            .then();
+    }
+    load = () => {
+        fetch(CONFIG.api.url, {
+            method: 'GET',
+        })
+            .then();
+    }
+    check = (id) => {
         fetch(CONFIG.api.url, {
             method: 'UPDATE',
         })
