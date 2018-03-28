@@ -70,6 +70,14 @@
   color: transparent;
 }
 
+.settings header span:not([style]) {
+  cursor: pointer;
+  font-size: 2rem;
+  margin: 0 1.9rem;
+  vertical-align: top;
+  color: #363636;
+}
+
 input[type='button'] {
   border: 0;
   width: 100%;

@@ -9,6 +9,8 @@ import React, { Component, Fragment } from 'react';
 import type from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 
+import Checkbox from '../../theme/assets/Checkbox';
+
 import Styles from './styles.scss';
 
 import Storage from '../../utils/Storage';
@@ -20,9 +22,10 @@ export default class Settings extends Component {
     }
 
     state = {
-        value:  '',
-        active: false, // Состояние фокуса. Для безопасности токена
-        error:  false,
+        value:      '',
+        active:     false, // Состояние фокуса. Для безопасности токена
+        error:      false,
+        apiEnabled: false,
     }
 
     /**
@@ -30,7 +33,7 @@ export default class Settings extends Component {
      */
 
     componentDidMount = () => {
-        this.setState({ value: Storage.get('token') });
+        this.setState({ value: Storage.get('token'), apiEnabled: Storage.get('api_enabled') });
     }
 
     /**
@@ -44,11 +47,12 @@ export default class Settings extends Component {
     }
 
     onClick = () => {
-        const { value } = this.state;
+        const { value, apiEnabled } = this.state;
 
-        if (!(/[A-Za-z0-9]{12,24}/).test(value)) return this.setState({ error: true });
+        if (apiEnabled && !(/[A-Za-z0-9]{12,24}/).test(value)) return this.setState({ error: true });
         this.setState({ error: false });
         Storage.set('token', value);
+        Storage.set('api_enabled', apiEnabled);
         Storage.save();
         this.closeWindow();
     }
@@ -61,6 +65,10 @@ export default class Settings extends Component {
         this.setState({ active: true });
     }
 
+    onToggle = () => {
+        this.setState({ apiEnabled: !this.state.apiEnabled });
+    }
+
     /**
      * Methods
      */
@@ -71,7 +79,7 @@ export default class Settings extends Component {
 
     render () {
         if (!this.props.show) return null;
-        const { error, value, active } = this.state;
+        const { error, value, active, apiEnabled } = this.state;
 
         return (
             <Fragment>
@@ -80,9 +88,18 @@ export default class Settings extends Component {
                     <button className = { Styles.cross } onMouseDown = { this.closeWindow }>x</button>
                     <header>
                         <h2>Настройки</h2>
+                        <Checkbox
+                            checked = { apiEnabled }
+                            color1 = '#3B8EF3'
+                            color2 = '#FFF'
+                            onClick = { this.onToggle }
+                        />
+                        <span>Онлайн режим</span>
+                        <br /><br />
                         <label>Token:<br />
                             <input
                                 className = { error ? Styles.error : null }
+                                disabled = { !apiEnabled }
                                 type = { active ? 'text' : 'password' }
                                 value = { value }
                                 onBlur = { this.onBlur }

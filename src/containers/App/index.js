@@ -135,7 +135,7 @@ export default class App extends Component {
     }
 
     addTask = (message) => {
-        if (!config.api.enabled) { // В случае Апокалипсиса приложение тоже должно работать!
+        if (!Storage.get('api_enabled')) { // В случае Апокалипсиса приложение тоже должно работать!
             return this.setState((prev) => ({
                 tasks: [new TaskClass(message), ...prev.tasks], // Добавляет задачу в начало списка
             }));
