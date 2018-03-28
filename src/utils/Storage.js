@@ -21,7 +21,7 @@ class Storage {
         if (!window.localStorage)
             return error('Ваш браузер не поддерживает localStorage! Функция кеширования задач отключена! Так же вам придется вводить токен при каждом запуске ;)');
 
-        const data = JSON.stringify(this.a);
+        const data = JSON.stringify(this.storage);
 
         localStorage.setItem('storage', data);
     }
@@ -32,11 +32,15 @@ class Storage {
         let data = localStorage.getItem('storage');
 
         if (!data) {
-            Storage._save();
+            Storage.save();
             data = {};
         }
 
-        Object.assign(this.a, JSON.parse(data)); //TODO: Try/Catch
+        try {
+            this.storage = JSON.parse(data);
+        } catch (e) {
+            Storage.save();
+        }
     }
     get = (item) => this.storage[item]
     set = (item, value) => void (this.storage[item] = value) // eslint-disable-line

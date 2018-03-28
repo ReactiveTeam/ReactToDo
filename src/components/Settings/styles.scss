@@ -95,6 +95,10 @@ input[type='button'] {
     transform: translate(-5%, -50%);
 }
 
+.error {
+    border-color: $paletteColor10 !important;
+}
+
 .overlay {
     top: 0;
     left: 0;

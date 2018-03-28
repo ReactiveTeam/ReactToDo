@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import type from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group'; // TODO:
 
 import Scheduler from 'components/Scheduler';
 import Settings from 'components/Settings';
 
 import TaskClass from '../../components/Task/Task';
-// import Storage from '../../utils/Storage';
+import Storage from '../../utils/Storage';
 import Server from '../../utils/Server';
 
 import Catcher from './onerror';
@@ -27,14 +28,28 @@ const { log } = logger;
 /* eslint-disable max-statements-per-line */
 // По причине того, что break писать на отдельной строке не выгодно, так как при его отсутствии кейсы пишутся один за другим
 
+Storage.load();
+const options = {
+    token: Storage.get('token') || '', // Я бы не клал token в context... Но так написано в ТЗ
+    //TODO: Сделать уведомление об отсутствии токена
+};
+
 export default class App extends Component {
+    static childContextTypes = {
+        token: type.string.isRequired,
+    }
+
+
     state = {
         tasks:    [],
         settings: false,
     }
 
+    getChildContext () {
+        return options;
+    }
+
     componentDidMount = () => {
-        // Storage._load();
         // this.setState({ tasks: [new TaskClass('Тестовая задача')]});
         //TODO: Вынести логику в класс Storage
         const tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -45,7 +60,7 @@ export default class App extends Component {
     //TODO:
     saveTasks = () => {
         localStorage.setItem('tasks', TaskClass.toJSON(this.state.tasks));
-        log('Список задач успешно сохранен', { from: 'App->savrTasks', level: 'save' });
+        log('Список задач успешно сохранен', { from: 'App->saveTasks', level: 'save' });
     }
 
     /** Переключатель видимости окошка настроек

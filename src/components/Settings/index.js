@@ -14,46 +14,86 @@ import Styles from './styles.scss';
 import Storage from '../../utils/Storage';
 
 export default class Settings extends Component {
- static propTypes = {
-     show:       type.bool.isRequired,
-     toggleShow: type.func.isRequired,
- }
+    static propTypes = {
+        show:       type.bool.isRequired,
+        toggleShow: type.func.isRequired,
+    }
 
- state = {
-     value:  '',
-     active: false, // Состояние фокуса. Для безопасности токена
- }
+    state = {
+        value:  '',
+        active: false, // Состояние фокуса. Для безопасности токена
+        error:  false,
+    }
 
- onChange = (event) => {
-     this.setState({ value: event.target.value });
- }
+    /**
+     * Reactive handlers
+     */
 
- onClick = () => {
-     Storage.token = this.state.value;
-     Storage._save();
- }
+    componentDidMount = () => {
+        this.setState({ value: Storage.get('token') });
+    }
 
- closeWindow = () => {
-     this.props.toggleShow(false);
- }
+    /**
+     * Handlers
+     */
 
- render () {
-     if (!this.props.show) return null;
+    onChange = (event) => {
+        const { value } = event.target;
 
-     return (
-         <Fragment>
-             <div className = { Styles.overlay } />
-             <div className = { Styles.settings }>
-                 <button className = { Styles.cross } onMouseDown = { this.closeWindow }>x</button>
-                 <header>
-                     <h2>Настройки</h2>
-                     <label>Token:<br />
-                         <input type = 'text' onChange = { this.onChange } />
-                     </label>
-                     <input type = 'button' value = 'Сохранить' onMouseDown = { this.onClick } />
-                 </header>
-             </div>
-         </Fragment>
-     );
- }
+        this.setState({ value });
+    }
+
+    onClick = () => {
+        const { value } = this.state;
+
+        if (!(/[A-Za-z0-9]{12,24}/).test(value)) return this.setState({ error: true });
+        this.setState({ error: false });
+        Storage.set('token', value);
+        Storage.save();
+        this.closeWindow();
+    }
+
+    onBlur = () => {
+        this.setState({ active: false });
+    }
+
+    onFocus = () => {
+        this.setState({ active: true });
+    }
+
+    /**
+     * Methods
+     */
+
+    closeWindow = () => {
+        this.props.toggleShow(false);
+    }
+
+    render () {
+        if (!this.props.show) return null;
+        const { error, value, active } = this.state;
+
+        return (
+            <Fragment>
+                <div className = { Styles.overlay } />
+                <div className = { Styles.settings }>
+                    <button className = { Styles.cross } onMouseDown = { this.closeWindow }>x</button>
+                    <header>
+                        <h2>Настройки</h2>
+                        <label>Token:<br />
+                            <input
+                                className = { error ? Styles.error : null }
+                                type = 'text'
+                                value = { active ? value : value.replace(/./g, '*') }
+                                onBlur = { this.onBlur }
+                                onChange = { this.onChange }
+                                onFocus = { this.onFocus }
+                            />
+                        </label>
+                        <input type = 'button' value = 'Сохранить' onMouseDown = { this.onClick } />
+                    </header>
+                </div>
+            </Fragment>
+        );
+    }
 }

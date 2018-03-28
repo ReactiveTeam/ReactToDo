@@ -94,6 +94,10 @@ input[type='button'] {
   transform: translate(-5%, -50%);
 }
 
+.error {
+  border-color: #F33B3B !important;
+}
+
 .overlay {
   top: 0;
   left: 0;
