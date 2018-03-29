@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import type from 'prop-types';
 import { TransitionGroup } from 'react-transition-group';
+import FlipMove from 'react-flip-move';
 
 import Catcher from './onerror';
 import Styles from './styles.scss';
@@ -122,9 +123,9 @@ export default class Sheduler extends Component {
                                  <input type = 'submit' value = 'Добавить задачу' />
                              </form>
                              <ul>
-                                 <TransitionGroup>
+                                 <FlipMove>
                                      {tasklist}
-                                 </TransitionGroup>
+                                 </FlipMove>
                              </ul>
                          </section>
                          <footer>
