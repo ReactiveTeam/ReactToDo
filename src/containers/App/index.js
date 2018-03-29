@@ -11,7 +11,6 @@ import Server from '../../utils/Server';
 
 import Catcher from './onerror';
 import Logger from 'prologger';
-import config from '../../config';
 
 import SettingsStyles from '../../components/Settings/styles.scss';
 
@@ -20,10 +19,6 @@ const logger = new Logger({ from:   'App',
         'ok'
     ]});
 const { log, error } = logger;
-
-// TODO
-// import TODO from './todo';
-// TODO
 
 /* eslint-disable max-statements-per-line */
 // По причине того, что break писать на отдельной строке не выгодно, так как при его отсутствии кейсы пишутся один за другим
@@ -232,12 +227,16 @@ export default class App extends Component {
     render () {
         return (
             <Catcher>
+                {/* <TransitionGroup> роняет приложение */}
                 <CSSTransition
                     classNames = { {
                         enter:       SettingsStyles.animateInStart,
                         enterActive: SettingsStyles.animateInEnd,
+                        exit:        SettingsStyles.animateOutStart,
+                        exitActive:  SettingsStyles.animateOutEnd,
                     } }
-                    timeout = { { enter: 5000 } }>
+                    key = { Date.now().toString() }
+                    timeout = { 500 }>
                     <Settings show = { this.state.settings } toggleShow = { this.toggleSettings } />
                 </CSSTransition>
                 <Scheduler

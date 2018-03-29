@@ -7,7 +7,7 @@
 
 import React, { Component, Fragment } from 'react';
 import type from 'prop-types';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Checkbox from '../../theme/assets/Checkbox';
 
@@ -111,6 +111,8 @@ export default class Settings extends Component {
                     </header>
                 </div>
             </Fragment>
+            //     </CSSTransition>
+            // </TransitionGroup>
         );
     }
 }
