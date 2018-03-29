@@ -77,28 +77,37 @@ export default class App extends Component {
         this.setState({ settings: Boolean(mode) });
     }
 
+    /**
+     * Task controllers
+     */
+
     /** Переключатель звезданутых задач
      * @param  {number} id - ID задачи в массиве. Передается по props
      * @param  {number} [toggle=0] - Сознательное переключение (-1 - false; 0 - toggle; 1 - true)
      */
-    toggleStar = (id, toggle = 0) => {
+    toggleStar = async (id, toggle = 0) => {
         const { tasks } = this.state;
         const index = tasks.map((e) => e.id).indexOf(id);
+        const ti = tasks[index];
 
         if (index < 0) throw new Error('Вы пометили несуществующее задание =D');
 
         switch (toggle) {
             case -1:
-                tasks[index].stared = false; break;
+                ti.stared = false; break;
             case 0:
-                tasks[index].stared = !tasks[index].stared; break;
+                ti.stared = !ti.stared; break;
             case 1:
-                tasks[index].stared = true; break;
+                ti.stared = true; break;
             default:
                 throw new Error('[App->toggleStar] Неизвестное значение toggle! Возможно, это баг...');
         }
 
-        log(`Переключил выжность задачи ${id} в положение ${tasks[index].stared} по по команде ${toggle}`, { from: 'App->toggleStar' });
+        if (Storage.get('api_enabled')) {
+            await Server.edit(id, ti.message, ti.checked, ti.stared);
+        }
+
+        log(`Переключил выжность задачи ${id} в положение ${ti.stared} по по команде ${toggle}`, { from: 'App->toggleStar' });
         this.setState({ tasks }, this.saveTasks);
     }
 
@@ -106,35 +115,47 @@ export default class App extends Component {
      * @param  {number} id - ID задачи в массиве. Передается по props
      * @param  {number} [toggle=0] - Сознательное переключение (-1 - false; 0 - toggle; 1 - true)
      */
-    toggleCheck = (id, toggle = 0) => {
+    toggleCheck = async (id, toggle = 0) => {
         const { tasks } = this.state;
         const index = tasks.map((e) => e.id).indexOf(id);
+        const ti = tasks[index];
 
         if (index < 0) throw new Error('Вы выполнили несуществующее задание =D');
 
         if (toggle === -1)
-            tasks[index].checked = false;
+            ti.checked = false;
         else if (toggle === 0)
-            tasks[index].checked = !tasks[index].checked;
+            ti.checked = !ti.checked;
         else if (toggle === 1)
-            tasks[index].checked = true;
+            ti.checked = true;
         else
             throw new Error('[App->toggleStar] Неизвестное значение toggle! Возможно, это баг...');
 
-        log(`Переключил задачу ${id} в положение ${tasks[index].checked} по по команде ${toggle}`, { from: 'App->toggleCheck', level: 'ok' });
+        if (Storage.get('api_enabled')) {
+            await Server.edit(id, ti.message, ti.checked, ti.stared);
+        }
+
+        log(`Переключил задачу ${id} в положение ${ti.checked} по по команде ${toggle}`, { from: 'App->toggleCheck', level: 'ok' });
         this.setState({ tasks }, this.saveTasks);
     }
 
     /** Переключает все задачи в положение "выполенено"
      * DANGER - очень опасная возможность, так как может быть использована случайно, при наличии большого списка задач
      */
-    checkAll = () => {
+    checkAll = async () => {
         if (!confirm('Вы действительно хотите пометить ВСЕ задания как выполненные?')) return; // FIXME:
 
         const { tasks } = this.state;
 
         for (const task of tasks) {
             task.checked = true;
+        }
+
+        if (Storage.get('api_enabled')) {
+            // TODO: Надо бы провести рефакторинг и обозвать все переменные как их называют на сервере
+            const sertasks = tasks.map((el) => ({ id: el.id, message: el.message, completed: el.checked, favorite: el.stared }));
+
+            await Server.edit(sertasks);
         }
 
         log(`Все задачи выполены`, { from: 'App->checkAll', level: 'ok' });
@@ -165,12 +186,18 @@ export default class App extends Component {
         }), this.saveTasks);
     }
 
-    editTask = (id, message) => {
+    editTask = async (id, message) => {
         const { tasks } = this.state;
         const index = tasks.map((e) => e.id).indexOf(id);
+        const ti = tasks[index];
 
-        tasks[index].message = message;
-        log(`Задача ${id} изменена на ${tasks[index].message}`, { from: 'App->editTask' });
+        ti.message = message;
+
+        if (Storage.get('api_enabled')) { //TODO: Вынести
+            await Server.edit(id, ti.message, ti.checked, ti.stared);
+        }
+
+        log(`Задача ${id} изменена на ${ti.message}`, { from: 'App->editTask' });
         this.setState({ tasks }, this.saveTasks);
     }
 

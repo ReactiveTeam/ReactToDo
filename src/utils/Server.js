@@ -69,7 +69,7 @@ class Server {
         return res;
     }
     edit = async (id, message, completed, favorite) => {
-        if (!(id && message && completed && favorite)) throw new TypeError('Чего-то не хватает...');
+        if (!id) throw new TypeError('Чего-то не хватает...');
 
         const res = await fetch(
             `${CONFIG.api.url}`,
@@ -79,7 +79,8 @@ class Server {
                     'Authorization': Storage.get('token'),
                     'Content-Type':  'application/json',
                 },
-                body: JSON.stringify({ id, message, completed, favorite }),
+                body: JSON.stringify(id instanceof Array ? id : [{ id, message, completed, favorite }]),
+                //                                          ^ Это нужно для checkAll
             }
         );
 
