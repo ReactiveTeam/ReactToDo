@@ -80,7 +80,7 @@ class Server {
                     'Content-Type':  'application/json',
                 },
                 body: JSON.stringify(id instanceof Array ? id : [{ id, message, completed, favorite }]),
-                //                                          ^ Это нужно для checkAll
+                //                           ^ Это нужно для checkAll
             }
         );
 

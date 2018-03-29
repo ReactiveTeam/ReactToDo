@@ -14,8 +14,6 @@ const logger = new Logger({
 });
 const { error } = logger;
 
-//FIXME: Столько костылей я ещё в жизни не видел...
-
 class Storage {
     storage = {
         tasks: [],
@@ -25,10 +23,7 @@ class Storage {
         if (!window.localStorage)
             return error('Ваш браузер не поддерживает localStorage! Функция кеширования задач отключена! Так же вам придется вводить токен при каждом запуске ;)');
 
-        const data = JSON.stringify(
-            this.storage
-            // (key, value) => value instanceof Tasker ? value.toJSON() : value // Разворачивание Task объектов
-        );
+        const data = JSON.stringify(this.storage);
 
 
         localStorage.setItem('storage', data);

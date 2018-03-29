@@ -111,8 +111,6 @@ export default class Settings extends Component {
                     </header>
                 </div>
             </div>
-            //     </CSSTransition>
-            // </TransitionGroup>
         );
     }
 }

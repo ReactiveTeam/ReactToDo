@@ -132,19 +132,25 @@ input[type='button'] {
 }
 
 .animateInStart {
-    opacity: 0.01;
+    opacity: 0.1;
+    transform: translateX(-50);
 }
 
 .animateInEnd {
-    transition: opacity 500ms $cubic1;
+    transition: opacity 200ms $cubic1,
+                transform 200ms $cubic1;
     opacity: 1;
+    transform: translateX(0);
 }
 
 .animateOutStart {
     opacity: 1;
+    transform: translateX(0);
 }
 
 .animateOutEnd {
-    transition: opacity 500ms $cubic1;
-    opacity: 0.01;
+    transition: opacity 200ms $cubic1,
+                transform 200ms $cubic1;
+    opacity: 0.1;
+    transform: translateX(-50);
 }
