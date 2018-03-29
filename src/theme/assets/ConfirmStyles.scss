@@ -1,0 +1,112 @@
+/**
+ * Copyright (c) 2018 PROPHESSOR
+ * 
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+ @import '../../theme/palette';
+ @import '../../theme/animations';
+ ////////////////////////////////////////////////////
+ // ______________________________________________ //
+ //  [ОСТОРОЖНО] Эта SCSS ёлка может сломать мозг  //
+ // ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ //
+ ////////////////////////////////////////////////////
+ .confirm {
+     top: 50%;
+     left: 50%;
+     width: 25%;
+     height: 25%;
+     z-index: 11;
+     display: block;
+     position: fixed;
+     align-items: left;
+     border-radius: 1rem;
+     // justify-content: left;
+     padding: 4rem 4rem 1rem;
+     background: $paletteColor4;
+     transform: translate(-50%, -50%);
+     box-shadow: 0 0.6rem 1.4rem 0.1rem $rgbaColor2;
+     justify-content: space-between;
+     h2 {
+          font-weight: 500;
+          font-size: 3.2rem;
+          color: $paletteColor5;
+          height: 3.2rem;
+     }
+     span {
+          margin-top: 3.2rem;
+          font-weight: 500;
+          font-size: 2.2rem;
+          color: $paletteColor5;
+          
+     }
+     & span:not([style]) {
+          cursor: pointer;
+          font-size: 2rem;
+          margin: 0 1.9rem;
+          vertical-align: top;
+          color: $paletteColor7;
+     }
+     form {
+          display: flex;
+          position: absolute;
+          bottom: 0;
+          button {
+               border: 0;
+               width: 9vw;
+               color: #FFF;
+               bottom: 0;
+               height: 4.2rem;
+               cursor: pointer;
+               font-size: 1.8rem;
+               margin-left: 1vw;
+               // position: absolute;
+               // margin-right: 25px;
+               // align-items: center;
+               // padding-left: 3.5rem;
+               border-radius: 0.5rem;
+               letter-spacing: .1rem;
+               // justify-content: center;
+               background-color: #3B8EF3;
+               background-position: 6% 50%;
+               background-repeat: no-repeat;
+               background-size: 1.8rem 1.8rem;
+               transform: translate(-5%, -50%); // Спасибо Максу за эту фишку)
+          }
+     }
+}
+
+ .overlay {
+     top: 0;
+     left: 0;
+     z-index: 10;
+     width: 100%;
+     height: 100%;
+     position: fixed;
+     background: $rgbaColor2;
+ }
+  
+ .animateInStart {
+     opacity: 0.1;
+     transform: translateX(-50);
+ }
+ 
+ .animateInEnd {
+     transition: opacity 200ms $cubic1,
+                 transform 200ms $cubic1;
+     opacity: 1;
+     transform: translateX(0);
+ }
+ 
+ .animateOutStart {
+     opacity: 1;
+     transform: translateX(0);
+ }
+ 
+ .animateOutEnd {
+     transition: opacity 200ms $cubic1,
+                 transform 200ms $cubic1;
+     opacity: 0.1;
+     transform: translateX(-50);
+ }

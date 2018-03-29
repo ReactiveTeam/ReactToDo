@@ -4,6 +4,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'; // TODO
 
 import Scheduler from 'components/Scheduler';
 import Settings from 'components/Settings';
+import Confirm from 'theme/assets/Confirm';
 
 import TaskClass from '../../components/Task/Task';
 import Storage from '../../utils/Storage';
@@ -26,7 +27,6 @@ const { log, error } = logger;
 Storage.load();
 const options = {
     token: Storage.get('token') || '', // Я бы не клал token в context... Но так написано в ТЗ
-    //TODO: Сделать уведомление об отсутствии токена
 };
 
 export default class App extends Component {
@@ -37,6 +37,10 @@ export default class App extends Component {
     state = {
         tasks:    [],
         settings: false,
+        confirm:  {
+            enabled: false,
+            message: '',
+        },
     }
 
     getChildContext () {
@@ -44,7 +48,6 @@ export default class App extends Component {
     }
 
     componentDidMount = async () => {
-        // this.setState({ tasks: [new TaskClass('Тестовая задача')]});
         const tasks = Storage.get('tasks');
 
         this.setState({ tasks: tasks.map((el) => new TaskClass(el)) });
@@ -227,7 +230,6 @@ export default class App extends Component {
     render () {
         return (
             <Catcher>
-                {/* <TransitionGroup> роняет приложение */}
                 <TransitionGroup>
                     {this.state.settings ? (
                         <CSSTransition
@@ -243,6 +245,7 @@ export default class App extends Component {
                         </CSSTransition>
                     ) : null}
                 </TransitionGroup>
+                {/* <Confirm /> */}
                 <Scheduler
                     addTask = { this.addTask }
                     checkAll = { this.checkAll }

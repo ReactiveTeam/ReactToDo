@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import type from 'prop-types';
 import { TransitionGroup } from 'react-transition-group';
 import FlipMove from 'react-flip-move';
+import { confirmAlert } from 'react-confirm-alert';
 
 import Catcher from './onerror';
 import Styles from './styles.scss';
+import ConfirmStyles from 'react-confirm-alert/src/react-confirm-alert.css';
 import TaskClass from '../Task/Task';
 
 
@@ -78,6 +80,22 @@ export default class Sheduler extends Component {
      }
 
      onCheckAll = () => {
+         confirmAlert({
+            title: 'Title',
+            message: 'Message',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => alert('Click Yes')
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Click No')
+              }
+            ],
+            childrenElement: () => <div />,
+            customUI: ({ title, message, onClose }) => <div>Custom UI</div>,
+         })
          this.setState({ allChecked: true }, () => setTimeout(() => this.setState({ allChecked: false }), 1000));
          this.props.checkAll();
      }
@@ -104,7 +122,7 @@ export default class Sheduler extends Component {
          return (
              <Catcher>
                  <div className = { Styles.scheduler }>
-                     <main>
+                     <main className = {ConfirmStyles.container}>
                          <header>
                              <h1>Планировщик задач</h1>
                              <button onMouseDown = { this.openSettings } />
