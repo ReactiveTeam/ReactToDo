@@ -105,7 +105,7 @@ export default class Sheduler extends Component {
          return (
              <Catcher>
                  <div className = { Styles.scheduler }>
-                     <main className = {ConfirmStyles.container}>
+                     <main className = { ConfirmStyles.container }>
                          <header>
                              <h1>Планировщик задач</h1>
                              <button onMouseDown = { this.openSettings } />

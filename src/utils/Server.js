@@ -88,12 +88,6 @@ class Server {
 
         return data;
     }
-    star = (id) => {
-        fetch(CONFIG.api.url, {
-            method: 'UPDATE',
-        })
-            .then();
-    }
 
     /**
      * {
@@ -150,12 +144,6 @@ class Server {
         const data = await res.json();
 
         return data;
-    }
-    check = (id) => {
-        fetch(CONFIG.api.url, {
-            method: 'UPDATE',
-        })
-            .then();
     }
 }
 
