@@ -14,16 +14,16 @@ import Styles from './styles.scss';
 class Tasker {
     constructor (message, checked = false, stared = false) {
         if (typeof message === 'object') {
-            this.stared = message.stared || message.favorite;
+            this.stared = message.stared || message.favorite || false;
             this.message = message.message;
-            this.checked = message.checked || message.completed;
+            this.checked = message.checked || message.completed || false;
             this.id = message.id;
 
             return;
         }
-        this.stared = stared;
+        this.stared = stared || false;
         this.message = message;
-        this.checked = checked;
+        this.checked = checked || false;
         this.id = ID.getId();
     }
 
@@ -88,10 +88,10 @@ class Tasker {
                 key = { task.id }
                 timeout = { 500 }>
                 <Task
-                    completed = { task.checked }
+                    completed = { task.checked || false }
                     editTask = { editTask }
                     removeTask = { removeTask }
-                    stared = { task.stared }
+                    stared = { task.stared || false }
                     taskid = { task.id }
                     text = { task.message }
                     toggleCheck = { toggleCheck }
