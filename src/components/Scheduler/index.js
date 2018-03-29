@@ -1,9 +1,7 @@
 
 import React, { Component } from 'react';
 import type from 'prop-types';
-import { TransitionGroup } from 'react-transition-group';
 import FlipMove from 'react-flip-move';
-import { confirmAlert } from 'react-confirm-alert';
 
 import Catcher from './onerror';
 import Styles from './styles.scss';
@@ -15,9 +13,10 @@ import Logger from 'prologger';
 import Checkbox from '../../theme/assets/Checkbox';
 const logger = new Logger({
     levels: [ // Уровни вывода лога. TODO: Не забудьте убрать после отладки!
-        'submit',
-        'change',
-        'click'
+        // 'submit',
+        // 'change',
+        // 'click'
+        'release'
     ],
     from: 'Scheduler',
 });
@@ -80,22 +79,6 @@ export default class Sheduler extends Component {
      }
 
      onCheckAll = () => {
-         confirmAlert({
-            title: 'Title',
-            message: 'Message',
-            buttons: [
-              {
-                label: 'Yes',
-                onClick: () => alert('Click Yes')
-              },
-              {
-                label: 'No',
-                onClick: () => alert('Click No')
-              }
-            ],
-            childrenElement: () => <div />,
-            customUI: ({ title, message, onClose }) => <div>Custom UI</div>,
-         })
          this.setState({ allChecked: true }, () => setTimeout(() => this.setState({ allChecked: false }), 1000));
          this.props.checkAll();
      }

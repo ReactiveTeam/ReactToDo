@@ -28,19 +28,6 @@ class Tasker {
     }
 
     /** Переводит задачу в JSON строку
-     * @returns {string} JSON строка
-     */
-    // toJSON () {
-    //     return null;
-    //     return JSON.stringify({
-    //         message: this.message,
-    //         checked: this.checked,
-    //         stared:  this.stared,
-    //         id:      this.id,
-    //     });
-    // }
-
-    /** Переводит задачу в JSON строку
      * @param  {Tasker} data - Задача
      * @returns {string} JSON строка
      */

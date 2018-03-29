@@ -18,6 +18,10 @@ require('../config/env');
 const jest = require('jest');
 const argv = process.argv.slice(2);
 
+console.log('############################################################');
+console.log("# --- А, ведь, и в тестах могли быть вирусы...  Верно? --- #");
+console.log('############################################################');
+
 // Watch unless on CI or in coverage mode
 if (!process.env.CI && argv.indexOf('--coverage') < 0) {
   argv.push('--watch');

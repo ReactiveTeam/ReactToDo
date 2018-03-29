@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import type from 'prop-types';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Checkbox from '../../theme/assets/Checkbox';
 import Delete from '../../theme/assets/Delete';
@@ -80,7 +79,6 @@ export default class Task extends Component {
                     </div>
                 </li>
             </Catcher>
-            // </CSSTransition>
         );
     }
 }

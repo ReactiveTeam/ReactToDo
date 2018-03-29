@@ -5,9 +5,8 @@
  * https://opensource.org/licenses/MIT
  */
 
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import type from 'prop-types';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Checkbox from '../../theme/assets/Checkbox';
 

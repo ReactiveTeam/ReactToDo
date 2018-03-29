@@ -1,7 +1,5 @@
-// Core
 import React, { Component } from 'react';
 
-// Imstruments
 import transform from './Svg';
 
 class EditIcon extends Component {

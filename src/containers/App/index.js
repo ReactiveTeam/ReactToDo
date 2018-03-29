@@ -4,7 +4,6 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'; // TODO
 
 import Scheduler from 'components/Scheduler';
 import Settings from 'components/Settings';
-import Confirm from 'theme/assets/Confirm';
 
 import TaskClass from '../../components/Task/Task';
 import Storage from '../../utils/Storage';
@@ -17,7 +16,8 @@ import SettingsStyles from '../../components/Settings/styles.scss';
 
 const logger = new Logger({ from:   'App',
     levels: [
-        'ok'
+        // 'ok'
+        'release'
     ]});
 const { log, error } = logger;
 
@@ -61,7 +61,6 @@ export default class App extends Component {
         }
     }
 
-    //TODO:
     saveTasks = () => {
         Storage.set('tasks', this.state.tasks);
         Storage.save();
@@ -141,7 +140,8 @@ export default class App extends Component {
      * DANGER - очень опасная возможность, так как может быть использована случайно, при наличии большого списка задач
      */
     checkAll = async () => {
-        if (!confirm('Вы действительно хотите пометить ВСЕ задания как выполненные?')) return; // FIXME:
+        // if (!confirm('Вы действительно хотите пометить ВСЕ задания как выполненные?')) return;
+        // ^ Раскомментируйте, если хотите сохранить нервы)
 
         const { tasks } = this.state;
 
@@ -226,6 +226,7 @@ export default class App extends Component {
 
         return a;
     }
+
 
     render () {
         return (
