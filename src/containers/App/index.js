@@ -50,10 +50,9 @@ export default class App extends Component {
 
     componentDidMount = async () => {
         // this.setState({ tasks: [new TaskClass('Тестовая задача')]});
-        //TODO: Вынести логику в класс Storage
-        const tasks = JSON.parse(localStorage.getItem('tasks'));
+        const tasks = Storage.get('tasks');
 
-        this.setState({ tasks: tasks.map((el) => new TaskClass(el)) }); //TODO
+        this.setState({ tasks: tasks.map((el) => new TaskClass(el)) });
 
         if (Storage.get('api_enabled')) {
             const sertasks = await Server.load();
@@ -66,7 +65,8 @@ export default class App extends Component {
 
     //TODO:
     saveTasks = () => {
-        localStorage.setItem('tasks', TaskClass.toJSON(this.state.tasks));
+        Storage.set('tasks', this.state.tasks);
+        Storage.save();
         log('Список задач успешно сохранен', { from: 'App->saveTasks', level: 'save' });
     }
 
@@ -176,8 +176,6 @@ export default class App extends Component {
 
     removeTask = async (id) => {
         if (Storage.get('api_enabled')) await Server.remove(id);
-
-        console.log(123);
 
         this.setState({
             tasks: this.state.tasks.filter((el) => el.id !== id), // Пропускает всё, кроме ID удаляемой задачи

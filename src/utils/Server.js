@@ -93,6 +93,45 @@ class Server {
         })
             .then();
     }
+
+    /**
+     * {
+     *      "message": "the request has succeeded",
+     *      "data": [
+     *          {
+     *              "id": "5a7f136231a5d90001271637",
+     *              "message": "Hello Andrey!",
+     *              "completed": true,
+     *              "favorite": false,
+     *              "created": "2018-02-10T15:44:34.624Z",
+     *              "modified": "2018-02-10T16:01:12.406Z"
+     *          },
+     *          {
+     *              "id": "5a7f136131a5d90001271636",
+     *              "message": "Hello",
+     *              "completed": false,
+     *              "favorite": false,
+     *              "created": "2018-02-10T15:44:33.675Z"
+     *          },
+     *          {
+     *              "id": "5a7f136031a5d90001271635",
+     *              "message": "Hello",
+     *              "completed": false,
+     *              "favorite": false,
+     *              "created": "2018-02-10T15:44:32.959Z"
+     *          }
+     *      ],
+     *      "meta": {
+     *          "total": 9,
+     *          "page": 1,
+     *          "size": 3
+     *      }
+     *  }
+     */
+
+    /** Загружает все задачи с сервера
+      * @returns {Promise} Обещание их вернуть
+      */
     load = async () => {
         const res = await fetch(
             CONFIG.api.url,

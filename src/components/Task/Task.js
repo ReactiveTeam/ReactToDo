@@ -12,9 +12,9 @@ import ID from '../../utils/Id';
 class Tasker {
     constructor (message, checked = false, stared = false) {
         if (typeof message === 'object') {
-            this.stared = message.stared;
+            this.stared = message.stared || message.favorite;
             this.message = message.message;
-            this.checked = message.checked;
+            this.checked = message.checked || message.completed;
             this.id = message.id;
 
             return;
@@ -25,21 +25,40 @@ class Tasker {
         this.id = ID.getId();
     }
 
+    /** Переводит задачу в JSON строку
+     * @returns {string} JSON строка
+     */
+    // toJSON () {
+    //     return null;
+    //     return JSON.stringify({
+    //         message: this.message,
+    //         checked: this.checked,
+    //         stared:  this.stared,
+    //         id:      this.id,
+    //     });
+    // }
+
+    /** Переводит задачу в JSON строку
+     * @param  {Tasker} data - Задача
+     * @returns {string} JSON строка
+     */
     static toJSON (data) {
         if (data instanceof Array) {
-            return JSON.stringify(data.map((e) => ({
-                message:   e.message,
-                completed: e.completed || e.checked,
-                stared:    e.stared || e.favorite,
-                id:        e.id,
-            })));
+            return JSON.stringify(
+                data.map((e) => ({
+                    message: e.message,
+                    checked: e.completed || e.checked,
+                    stared:  e.stared || e.favorite,
+                    id:      e.id,
+                }))
+            );
         }
         if (data instanceof Tasker) {
             return JSON.stringify({
-                message:   data.message,
-                completed: data.completed,
-                stared:    data.stared,
-                id:        data.id,
+                message: data.message,
+                checked: data.checked,
+                stared:  data.stared,
+                id:      data.id,
             });
         }
         throw new TypeError('Не могу преобразовать в JSON строку эту странную структуру данных...');
@@ -51,7 +70,7 @@ class Tasker {
      */
     static sort (array) {
         return array.sort(
-            (a, b) => (a.message.charCodeAt() - b.message.charCodeAt()) + (a.message.charCodeAt(1) - b.message.charCodeAt(1)) // eslint-disable-line
+            (a, b) => (a.message.charCodeAt() - b.message.charCodeAt()) // eslint-disable-line
         );
     }
 
@@ -65,6 +84,7 @@ class Tasker {
      */
     static toJSX (task, { editTask, removeTask, toggleCheck, toggleStar }) {
         if (!(task instanceof Tasker)) throw new TypeError('Переданное вами чудо не похоже на задачу!');
+
 
         return (
             <Task

@@ -4,24 +4,32 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
+// import Tasker from '../components/Task/Task';
 
 import Logger from 'prologger';
 const logger = new Logger({
     from:       'Storage',
     showColors: false,
+    showDate:   false,
 });
 const { error } = logger;
 
 //FIXME: Столько костылей я ещё в жизни не видел...
 
 class Storage {
-    storage = {}
+    storage = {
+        tasks: [],
+    }
 
     save = () => {
         if (!window.localStorage)
             return error('Ваш браузер не поддерживает localStorage! Функция кеширования задач отключена! Так же вам придется вводить токен при каждом запуске ;)');
 
-        const data = JSON.stringify(this.storage);
+        const data = JSON.stringify(
+            this.storage
+            // (key, value) => value instanceof Tasker ? value.toJSON() : value // Разворачивание Task объектов
+        );
+
 
         localStorage.setItem('storage', data);
     }
@@ -32,14 +40,14 @@ class Storage {
         let data = localStorage.getItem('storage');
 
         if (!data) {
-            Storage.save();
+            this.save();
             data = {};
         }
 
         try {
             this.storage = JSON.parse(data);
         } catch (e) {
-            Storage.save();
+            this.save();
         }
     }
     get = (item) => this.storage[item]

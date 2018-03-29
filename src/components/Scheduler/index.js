@@ -87,7 +87,7 @@ export default class Sheduler extends Component {
 
          let tasklist = [];
 
-         tasklist = tasklist.concat( // Объединяем массивы задач в один с нужным нам порядком
+         tasklist = tasklist.concat( // Объединяем массивы задач в один с нужным нам порядком; Переводим в JSX
              tasks[0]
                  .filter((e) => e.message.toLowerCase().includes(this.state.search.toLowerCase()))
                  .map((e) => TaskClass.toJSX(e, { editTask, removeTask, toggleCheck, toggleStar })), // Важные задачи
