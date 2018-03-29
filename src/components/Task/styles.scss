@@ -67,18 +67,24 @@
 
 .animateInStart {
     opacity: 0.1;
+    transform: scale(.5);
 }
 
 .animateInEnd {
     opacity: 1;
-    transition: opacity 500ms $cubic1;
+    transform: scale(1);
+    transition: opacity 500ms $cubic1,
+                transform 500ms $cubic1;
 }
 
 .animateOutStart {
     opacity: 1;
+    transform: scale(1);
 }
 
 .animateOutEnd {
     opacity: 0.1;
-    transition: opacity 500ms $cubic1;
+    transform: scale(.5);
+    transition: opacity 500ms $cubic1,
+                transform 500ms $cubic1;
 }

@@ -6,8 +6,10 @@
  */
 
 import React from 'react';
+import { CSSTransition } from 'react-transition-group';
 import Task from '.';
 import ID from '../../utils/Id';
+import Styles from './styles.scss';
 
 class Tasker {
     constructor (message, checked = false, stared = false) {
@@ -87,17 +89,28 @@ class Tasker {
 
 
         return (
-            <Task
-                completed = { task.checked }
-                editTask = { editTask }
+            <CSSTransition
+                classNames = {
+                    {
+                        enter:       Styles.animateInStart,
+                        enterActive: Styles.animateInEnd,
+                        exit:        Styles.animateOutStart,
+                        exitActive:  Styles.animateOutEnd,
+                    }
+                }
                 key = { task.id }
-                removeTask = { removeTask }
-                stared = { task.stared }
-                taskid = { task.id }
-                text = { task.message }
-                toggleCheck = { toggleCheck }
-                toggleStar = { toggleStar }
-            />
+                timeout = { 500 }>
+                <Task
+                    completed = { task.checked }
+                    editTask = { editTask }
+                    removeTask = { removeTask }
+                    stared = { task.stared }
+                    taskid = { task.id }
+                    text = { task.message }
+                    toggleCheck = { toggleCheck }
+                    toggleStar = { toggleStar }
+                />
+            </CSSTransition>
         );
     }
 }
