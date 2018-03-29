@@ -82,7 +82,7 @@ export default class Settings extends Component {
         const { error, value, active, apiEnabled } = this.state;
 
         return (
-            <Fragment>
+            <div>
                 <div className = { Styles.overlay } />
                 <div className = { Styles.settings }>
                     <button className = { Styles.cross } onMouseDown = { this.closeWindow }>x</button>
@@ -110,7 +110,7 @@ export default class Settings extends Component {
                         <input type = 'button' value = 'Сохранить' onMouseDown = { this.onClick } />
                     </header>
                 </div>
-            </Fragment>
+            </div>
             //     </CSSTransition>
             // </TransitionGroup>
         );

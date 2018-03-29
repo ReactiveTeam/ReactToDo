@@ -228,17 +228,21 @@ export default class App extends Component {
         return (
             <Catcher>
                 {/* <TransitionGroup> роняет приложение */}
-                <CSSTransition
-                    classNames = { {
-                        enter:       SettingsStyles.animateInStart,
-                        enterActive: SettingsStyles.animateInEnd,
-                        exit:        SettingsStyles.animateOutStart,
-                        exitActive:  SettingsStyles.animateOutEnd,
-                    } }
-                    key = { Date.now().toString() }
-                    timeout = { 500 }>
-                    <Settings show = { this.state.settings } toggleShow = { this.toggleSettings } />
-                </CSSTransition>
+                <TransitionGroup>
+                {this.state.settings ? (
+                    <CSSTransition
+                        classNames = { {
+                            enter:       SettingsStyles.animateInStart,
+                            enterActive: SettingsStyles.animateInEnd,
+                            exit:        SettingsStyles.animateOutStart,
+                            exitActive:  SettingsStyles.animateOutEnd,
+                        } }
+                        key = { Date.now().toString() }
+                        timeout = { 500 }>
+                        <Settings show = { this.state.settings } toggleShow = { this.toggleSettings } />
+                    </CSSTransition>
+                ) : null}
+                </TransitionGroup>
                 <Scheduler
                     addTask = { this.addTask }
                     checkAll = { this.checkAll }
