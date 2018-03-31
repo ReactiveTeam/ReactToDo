@@ -48,7 +48,7 @@ export default class Settings extends Component {
     onClick = () => {
         const { value, apiEnabled } = this.state;
 
-        if (apiEnabled && !(/[A-Za-z0-9]{12,24}/).test(value)) return this.setState({ error: true });
+        if (apiEnabled && !(/^[A-Za-z0-9]{12,24}$/).test(value)) return this.setState({ error: true });
         this.setState({ error: false });
         Storage.set('token', value);
         Storage.set('api_enabled', apiEnabled);
