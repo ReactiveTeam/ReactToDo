@@ -5,7 +5,6 @@ import FlipMove from 'react-flip-move';
 
 import Catcher from './onerror';
 import Styles from './styles.scss';
-import ConfirmStyles from 'react-confirm-alert/src/react-confirm-alert.css';
 import TaskClass from '../Task/Task';
 
 
@@ -105,7 +104,7 @@ export default class Sheduler extends Component {
          return (
              <Catcher>
                  <div className = { Styles.scheduler }>
-                     <main className = { ConfirmStyles.container }>
+                     <main>
                          <header>
                              <h1>Планировщик задач</h1>
                              <button onMouseDown = { this.openSettings } />
